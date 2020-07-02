@@ -1,0 +1,116 @@
+version: "3.7"
+services:
+    postgres:
+        container_name: postgres
+        image: postgres:9.6
+        environment:
+            - POSTGRES_USER=airflow
+            - POSTGRES_PASSWORD=airflow
+            - POSTGRES_DB=airflow
+        logging:
+            options:
+                max-size: 10m
+                max-file: "3"        
+
+    airflow:
+        container_name: airflow
+        build:
+            context: ./airflow
+            dockerfile: Dockerfile
+        restart: always
+        depends_on:
+            - postgres
+        environment:
+            - EXECUTOR=Local
+            - AIRFLOW__SCHEDULER__MIN_FILE_PROCESS_INTERVAL=15
+            - AIRFLOW__WEBSERVER__WORKER_REFRESH_INTERVAL=450
+            - AIRFLOW__WEBSERVER__WEB_SERVER_WORKER_TIMEOUT=150
+        logging:
+            options:
+                max-size: 10m
+                max-file: "3"
+        volumes:
+            - ./airflow/dags:/usr/local/airflow/dags
+        ports:
+            - "8080:8080"
+        command: webserver
+        healthcheck:
+            test: ["CMD-SHELL", "[ -f /usr/local/airflow/airflow-webserver.pid ]"]
+            interval: 30s
+            timeout: 30s
+            retries: 3
+
+    zookeeper:
+        container_name: zookeeper
+        image: confluentinc/cp-zookeeper:5.3.1
+        environment:
+            - ZOOKEEPER_CLIENT_PORT=2181
+        ports:
+            - "2181:2181"
+        volumes:
+            - zookeeper_data:/var/lib/zookeeper/data
+
+    kafka:
+        container_name: kafka
+        image: confluentinc/cp-kafka:5.3.1
+        environment:
+            - KAFKA_ZOOKEEPER_CONNECT=zookeeper:2181
+            - KAFKA_ADVERTISED_LISTENERS=PLAINTEXT://kafka:9092
+            - KAFKA_CONFLUENT_SUPPORT_METRICS_ENABLE=false
+            - KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR=1
+            - KAFKA_CREATE_TOPICS="news:1:1"
+            - KAFKA_HEAP_OPTS=-Xmx512m -Xms512m
+        depends_on:
+            - zookeeper
+        volumes:
+            - kafka_data:/kafka/data  
+
+    schema-registry:
+        container_name: schema-registry
+        image: confluentinc/cp-schema-registry:5.3.1
+        environment:
+            - SCHEMA_REGISTRY_HOST_NAME=schema-registry
+            - SCHEMA_REGISTRY_KAFKASTORE_CONNECTION_URL=zookeeper:2181
+            - SCHEMA_REGISTRY_LOG4J_ROOT_LOGLEVEL=WARN
+        depends_on:
+            - kafka  
+
+    redis:
+        container_name: redis
+        image: redis:alpine
+        command: redis-server
+        ports:
+            - "6379:6379"
+        volumes:
+            - ./redis_data:/var/lib/redis
+            - ./redis.conf:/usr/local/etc/redis/redis.conf
+
+    connect:
+        container_name: connect
+        build: ./connect
+        ports:
+            - 8083:8083
+        depends_on:
+            - kafka
+            - schema-registry
+        
+    mongo:
+        container_name: mongo
+        image: mongo:4.2
+        environment: 
+            - MONGO_INITDB_ROOT_USERNAME:admin
+            - MONGO_INITDB_ROOT_PASSWORD:admin
+        volumes:
+            - ./mongo/init.sh:/usr/local/bin/init.sh
+        command: ["mongod"]         
+
+networks: 
+    default:
+        name: backend-net
+
+volumes:
+    zookeeper_data: {}
+    kafka_data: {}
+    redis_data: {}
+    redis.conf: {}
+

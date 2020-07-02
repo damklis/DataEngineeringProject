@@ -1,0 +1,8 @@
+atoma
+python-dateutil
+kafka-python
+beautifulsoup4
+lxml
+requests
+redis
+pytest
