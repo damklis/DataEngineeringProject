@@ -1,8 +1,9 @@
-atoma
-python-dateutil
-kafka-python
-beautifulsoup4
-lxml
-requests
-redis
-pytest
+atoma==0.0.17
+python-dateutil==2.8.1
+kafka-python==2.0.1
+beautifulsoup4==4.9.1
+lxml==4.5.1
+redis==3.5.3
+requests==2.23.0
+pytest==5.4.3
+fakeredis==1.4.1

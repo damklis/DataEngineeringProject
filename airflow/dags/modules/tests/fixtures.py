@@ -1,20 +1,23 @@
 from pkg_resources import resource_string
 import pytest
-from pytest import fixture
+import fakeredis
 from parser import WebParser
 from requests import Response
-from proxypool import ProxyPoolScraper, ProxyRecord
 from rss_news import NewsProducer
+from proxypool import ProxyPoolScraper, ProxyRecord
+
+
+TEST_URL = "https://test.com"
 
 
 @pytest.fixture
 def web_parser():
-    yield WebParser("https://test.com")
+    yield WebParser(TEST_URL)
 
 
 @pytest.fixture
 def scraper():
-    yield ProxyPoolScraper("https://test.com")
+    yield ProxyPoolScraper(TEST_URL)
 
 
 @pytest.fixture
@@ -34,12 +37,26 @@ def proxy():
 @pytest.fixture
 def producer():
     yield NewsProducer(
-        "https://test.com",
+        TEST_URL,
         {
             "http": "http://127.0.0.1:8080", 
             "https": "http://127.0.0.1:8080"
         }
     )
+
+
+@pytest.fixture
+def redis_mock():
+    yield fakeredis.FakeStrictRedis()
+
+
+@pytest.fixture
+def redis_config():
+    yield {
+        "host": "redis",
+        "port": "6379",
+        "db": 0 
+    }
 
 
 @pytest.fixture

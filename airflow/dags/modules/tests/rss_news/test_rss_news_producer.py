@@ -23,7 +23,7 @@ def test_get_news_stream(get_content, web_parser, raw_content, producer):
     [
         ("example////1 example", "example1example"),
         ("example%%%%%%%2 example", "example2example"),
-        ("*******example-3_    example", "example-3_example")]
+        ("*******example-3_  xx  example", "example-3_xxexample")]
 )
 def test_construct_id(producer, title, expected_id):
 
