@@ -4,12 +4,11 @@ import pytest
 import fakeredis
 from proxypool import RedisProxyPoolClient
 
-from ..fixtures import redis_config, redis_mock
+from ..fixtures import redis_config, redis_mock, proxies
 
 
 @patch("proxypool.redis_proxypool_client.redis.StrictRedis")
-def test_override_existing_proxies(redis, redis_config, redis_mock):
-    proxies = [{"http": "http://127.0.0.1:8080", "https": "http://127.0.0.1:8080"}]
+def test_override_existing_proxies(redis, redis_config, redis_mock, proxies):
     new_proxies = [{"http": "http://127.0.0.1:8081", "https": "http://127.0.0.1:8081"}]
     key = "test"
     redis_mock.lpush(key, *[json.dumps(_) for _ in proxies])
@@ -27,8 +26,7 @@ def test_override_existing_proxies(redis, redis_config, redis_mock):
 
 
 @patch("proxypool.redis_proxypool_client.redis.StrictRedis")
-def test_list_existing_proxies(redis, redis_config, redis_mock):
-    proxies = [{"http": "http://127.0.0.1:8080", "https": "http://127.0.0.1:8080"}]
+def test_list_existing_proxies(redis, redis_config, redis_mock, proxies):
     key = "test"
     redis_mock.lpush(key, *[json.dumps(_) for _ in proxies])
 
