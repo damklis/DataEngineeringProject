@@ -1,7 +1,8 @@
 FROM confluentinc/cp-kafka-connect-base:5.3.1
 
-RUN confluent-hub install \ 
---no-prompt mongodb/kafka-connect-mongodb:latest
+RUN confluent-hub install --no-prompt mongodb/kafka-connect-mongodb:latest
+RUN confluent-hub install --no-prompt confluentinc/kafka-connect-elasticsearch:5.4.0
+
 
 ENV CONNECT_KAFKA_HEAP_OPTS "-Xms512m -Xmx512m"
 ENV CONNECT_BOOTSTRAP_SERVERS "kafka:9092"
