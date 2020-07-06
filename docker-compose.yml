@@ -58,7 +58,7 @@ services:
             - KAFKA_ADVERTISED_LISTENERS=PLAINTEXT://kafka:9092
             - KAFKA_CONFLUENT_SUPPORT_METRICS_ENABLE=false
             - KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR=1
-            - KAFKA_CREATE_TOPICS="news:1:1"
+            - KAFKA_CREATE_TOPICS="rss:1:1"
             - KAFKA_HEAP_OPTS=-Xmx512m -Xms512m
         depends_on:
             - zookeeper
