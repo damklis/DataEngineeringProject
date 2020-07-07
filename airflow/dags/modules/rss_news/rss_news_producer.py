@@ -13,31 +13,30 @@ class News:
     title: str
     link: str
     published: str
-    id: str
+    _id: str
     
     def as_dict(self):
         return self.__dict__
 
 
 class NewsProducer:
-    def __init__(self, rss_feed, proxies=None):
+    def __init__(self, rss_feed):
         self.parser = WebParser(rss_feed)
-        self.proxies = proxies
 
-    def extract_rss_feed(self, proxies):
+    def _extract_rss_feed(self, proxies):
         content = self.parser.get_content(proxies=proxies)
         return atoma.parse_rss_bytes(content)
 
-    def get_news_stream(self):
-        rss_feed = self.extract_rss_feed(self.proxies) 
+    def get_news_stream(self, proxies):
+        rss_feed = self._extract_rss_feed(proxies) 
         for entry in rss_feed.items:
-            id = self.construct_id(entry.title)
+            _id = self.construct_id(entry.title)
             published_date = self.unify_date(entry.pub_date)
             yield News(
                 entry.title,
                 entry.link,
                 published_date,
-                id
+                _id
             )
 
     @staticmethod

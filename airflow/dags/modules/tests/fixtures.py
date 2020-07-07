@@ -31,7 +31,7 @@ def proxies():
 
 
 @pytest.fixture
-def proxy():
+def proxy_record():
     yield ProxyRecord(
         "127.0.0.1",
         8080,
@@ -46,13 +46,7 @@ def proxy():
 
 @pytest.fixture
 def producer():
-    yield NewsProducer(
-        TEST_URL,
-        {
-            "http": "http://127.0.0.1:8080", 
-            "https": "http://127.0.0.1:8080"
-        }
-    )
+    yield NewsProducer(TEST_URL)
 
 
 @pytest.fixture

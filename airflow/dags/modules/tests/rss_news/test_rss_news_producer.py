@@ -3,16 +3,16 @@ from unittest.mock import patch
 import pytest
 from rss_news import NewsProducer, News
 
-from ..fixtures import web_parser, raw_content, producer
+from ..fixtures import web_parser, raw_content, producer, proxies
 
 
 @patch("parser.web_parser.WebParser.get_content")
-def test_get_news_stream(get_content, web_parser, raw_content, producer):
+def test_get_news_stream(get_content, web_parser, raw_content, producer, proxies):
 
     get_content.return_value = raw_content("rss_news_file.txt")
     producer.parser = web_parser
 
-    stream = producer.get_news_stream()
+    stream = producer.get_news_stream(proxies)
     result = list(stream)[-1]
 
     assert isinstance(result, News)
