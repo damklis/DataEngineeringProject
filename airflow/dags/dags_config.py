@@ -22,7 +22,6 @@ class Config:
         "goal.com": "https://www.goal.com/feeds/en/news",
         "eyefootball": "https://www.eyefootball.com/football_news.xml",
         "101greatgoals": "https://www.101greatgoals.com/feed/",
-        "fourfourtwo": "https://www.fourfourtwo.com/rss.xml",
         "sportslens": "https://sportslens.com/feed/"
 
     }
