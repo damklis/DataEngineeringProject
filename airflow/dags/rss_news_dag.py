@@ -32,7 +32,7 @@ def exporting_events(config, rss_feed, dag):
 
 dag = DAG(
     "rss_news_dag",
-    description="scrape rss feeds and export events to kafka broker using proxypool",
+    description="scrape rss feeds and export events to broker using proxypool",
     schedule_interval="0 12 * * *",
     start_date=datetime(2020, 1, 1),
     catchup=False
@@ -47,9 +47,12 @@ proxypool = PythonOperator(
 
 start = dummy_callable("starting_pipeline", "started", dag)
 
-job_1 = exporting_events(config, "sportowefakty", dag)
-job_2 = exporting_events(config, "przegladsportowy", dag)
+job_1 = exporting_events(config, "goal.com", dag)
+job_2 = exporting_events(config, "eyefootball", dag)
+job_3 = exporting_events(config, "101greatgoals", dag)
+job_4 = exporting_events(config, "fourfourtwo", dag)
+job_5 = exporting_events(config, "sportslens", dag)
 
 finish = dummy_callable("finishing_pipeline", "finished", dag)
 
-start >> proxypool >> [job_1, job_2] >> finish
+start >> proxypool >> [job_1, job_2, job_3, job_4, job_5] >> finish

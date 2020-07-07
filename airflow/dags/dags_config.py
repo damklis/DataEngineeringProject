@@ -19,8 +19,12 @@ class Config:
     NUMBER_OF_PROXIES = 50
 
     RSS_FEEDS = {
-        "sportowefakty": "https://sportowefakty.wp.pl/rss.xml",
-        "przegladsportowy": "https://deadspin.com/rss"
+        "goal.com": "https://www.goal.com/feeds/en/news",
+        "eyefootball": "https://www.eyefootball.com/football_news.xml",
+        "101greatgoals": "https://www.101greatgoals.com/feed/",
+        "fourfourtwo": "https://www.fourfourtwo.com/rss.xml",
+        "sportslens": "https://sportslens.com/feed/"
+
     }
 
     BOOTSTRAP_SERVERS = ["kafka:9092"] 
