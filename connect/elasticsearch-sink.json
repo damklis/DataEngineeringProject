@@ -1,5 +1,5 @@
 {
-    "name": "elastic-sink",
+    "name": "elasticsearch-sink",
     "config": {
         "connector.class": "io.confluent.connect.elasticsearch.ElasticsearchSinkConnector",
         "connection.url": "http://elasticsearch:9200",

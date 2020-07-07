@@ -12,7 +12,9 @@ from rss_news.retry_on_exception import (
 def export_news_to_broker(config, rss_feed):
     logger = Logger().get_logger(__name__)
     rss_feed = config.RSS_FEEDS[rss_feed]
-    redis = RedisProxyPoolClient(config.REDIS_KEY, config.REDIS_CONFIG)
+    redis = RedisProxyPoolClient(
+        config.REDIS_KEY, config.REDIS_CONFIG
+    )
     with NewsExporter(config.BOOTSTRAP_SERVERS) as exporter:
         proxy = redis.get_random_proxy()
         logger.info(proxy)

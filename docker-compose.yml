@@ -14,17 +14,10 @@ services:
 
     airflow:
         container_name: airflow
-        build:
-            context: ./airflow
-            dockerfile: Dockerfile
+        build: ./airflow
         restart: always
         depends_on:
             - postgres
-        environment:
-            - EXECUTOR=Local
-            - AIRFLOW__SCHEDULER__MIN_FILE_PROCESS_INTERVAL=15
-            - AIRFLOW__WEBSERVER__WORKER_REFRESH_INTERVAL=450
-            - AIRFLOW__WEBSERVER__WEB_SERVER_WORKER_TIMEOUT=150
         logging:
             options:
                 max-size: 10m
@@ -52,14 +45,7 @@ services:
 
     kafka:
         container_name: kafka
-        image: confluentinc/cp-kafka:5.3.1
-        environment:
-            - KAFKA_ZOOKEEPER_CONNECT=zookeeper:2181
-            - KAFKA_ADVERTISED_LISTENERS=PLAINTEXT://kafka:9092
-            - KAFKA_CONFLUENT_SUPPORT_METRICS_ENABLE=false
-            - KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR=1
-            - KAFKA_CREATE_TOPICS="rss:1:1"
-            - KAFKA_HEAP_OPTS=-Xmx512m -Xms512m
+        build: ./kafka
         depends_on:
             - zookeeper
         volumes:
@@ -92,25 +78,11 @@ services:
         depends_on:
             - kafka
             - schema-registry
-        
-    mongo:
-        container_name: mongo
-        image: mongo:4.2
-        environment: 
-            - MONGO_INITDB_ROOT_USERNAME:admin
-            - MONGO_INITDB_ROOT_PASSWORD:admin
-        volumes:
-            - ./mongo/init.sh:/usr/local/bin/init.sh
-        command: ["mongod"]   
-        
+
     elasticsearch:
         container_name: elasticsearch
-        image: docker.elastic.co/elasticsearch/elasticsearch:7.7.0
+        build: ./elastic
         restart: unless-stopped
-        environment:
-            - discovery.type=single-node
-            - bootstrap.memory_lock=true
-            - ES_JAVA_OPTS=-Xms512m -Xmx512m
         ulimits:
             memlock:
                 soft: -1
@@ -123,13 +95,10 @@ services:
     kibana:
         container_name: kibana
         image: docker.elastic.co/kibana/kibana:7.6.2
-        restart: unless-stopped
         depends_on:
             - elasticsearch
         ports:
             - 5601:5601
-        volumes:
-            - kibanadata:/usr/share/kibana/data
 
 networks: 
     default:
@@ -139,6 +108,5 @@ volumes:
     zookeeper_data: {}
     kafka_data: {}
     redis: {}
-    kibanadata: {}
     esdata: {}
 
