@@ -5,6 +5,7 @@ from parser import WebParser
 from requests import Response
 from rss_news import NewsProducer
 from proxypool import ProxyPoolScraper, ProxyRecord
+from retry import RetryOnException as retry
 
 
 TEST_URL = "https://test.com"
@@ -82,3 +83,13 @@ def raw_content():
         )
     
     yield helper
+
+
+@pytest.fixture()
+def add_function():
+
+    @retry(5)
+    def func(a , b):
+        return a + b
+
+    yield func

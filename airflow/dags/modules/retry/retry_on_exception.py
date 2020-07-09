@@ -14,7 +14,7 @@ class RetryOnException:
             self.logger.info(f"Retries: {self._retries}")
             while self._retries != 0:
                 try:
-                    function(*args, **kwargs)
+                    return function(*args, **kwargs)
                     self._retries = 0
                 except Exception as err:
                     self.logger.info(f"Error occured: {err}")
@@ -23,7 +23,7 @@ class RetryOnException:
         return wrapper
 
     def _raise_exception(self, retries, exception):
-        if retries == 0:
+        if retries == 0: 
             raise exception
-        else:
+        else: 
             self.logger.info(f"Retries: {retries}")

@@ -1,7 +1,7 @@
 import datetime
 from unittest.mock import patch
 import pytest
-from rss_news import NewsProducer, News
+from rss_news import News
 
 from ..fixtures import web_parser, raw_content, producer, proxies
 
