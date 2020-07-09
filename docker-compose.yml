@@ -1,0 +1,124 @@
+version: "3.7"
+services:
+    postgres:
+        container_name: postgres
+        image: postgres:9.6
+        environment:
+            - POSTGRES_USER=airflow
+            - POSTGRES_PASSWORD=airflow
+            - POSTGRES_DB=airflow
+        logging:
+            options:
+                max-size: 10m
+                max-file: "3"        
+
+    airflow:
+        container_name: airflow
+        build: ./airflow
+        restart: always
+        depends_on:
+            - postgres
+        logging:
+            options:
+                max-size: 10m
+                max-file: "3"
+        volumes:
+            - ./airflow/dags:/usr/local/airflow/dags
+        ports:
+            - "8080:8080"
+        command: webserver
+        healthcheck:
+            test: ["CMD-SHELL", "[ -f /usr/local/airflow/airflow-webserver.pid ]"]
+            interval: 30s
+            timeout: 30s
+            retries: 3
+
+    zookeeper:
+        container_name: zookeeper
+        image: confluentinc/cp-zookeeper:5.3.1
+        environment:
+            - ZOOKEEPER_CLIENT_PORT=2181
+        ports:
+            - "2181:2181"
+        volumes:
+            - zookeeper_data:/var/lib/zookeeper/data
+
+    kafka:
+        container_name: kafka
+        build: ./kafka
+        depends_on:
+            - zookeeper
+        volumes:
+            - kafka_data:/kafka/data  
+
+    schema-registry:
+        container_name: schema-registry
+        image: confluentinc/cp-schema-registry:5.3.1
+        environment:
+            - SCHEMA_REGISTRY_HOST_NAME=schema-registry
+            - SCHEMA_REGISTRY_KAFKASTORE_CONNECTION_URL=zookeeper:2181
+            - SCHEMA_REGISTRY_LOG4J_ROOT_LOGLEVEL=WARN
+        depends_on:
+            - kafka  
+
+    redis:
+        container_name: redis
+        image: redis:alpine
+        command: redis-server
+        ports:
+            - "6379:6379"
+        volumes:
+            - ./redis:/usr/local/etc/redis
+
+    connect:
+        container_name: connect
+        build: ./connect
+        ports:
+            - 8083:8083
+        depends_on:
+            - kafka
+            - schema-registry
+
+    elasticsearch:
+        container_name: elasticsearch
+        build: ./elastic
+        restart: unless-stopped
+        ulimits:
+            memlock:
+                soft: -1
+                hard: -1
+        ports:
+            - 9200:9200
+
+    logstash:
+        container_name: logstash
+        build: ./logstash
+        volumes:
+            - "./logstash/pipeline:/usr/share/logstash/pipeline"
+        depends_on:
+            - elasticsearch
+            - kafka
+
+    mongo:
+        container_name: mongo
+        image: mongo:4.2
+        ports:
+            - 27017:27017
+        command: ["mongod"]
+
+    # kibana:
+    #     container_name: kibana
+    #     image: docker.elastic.co/kibana/kibana:7.6.2
+    #     depends_on:
+    #         - elasticsearch
+    #     ports:
+    #         - 5601:5601
+
+networks: 
+    default:
+        name: backend-net
+
+volumes:
+    zookeeper_data: {}
+    kafka_data: {}
+    redis: {}

@@ -1,0 +1,8 @@
+.vscode
+__pycache__
+.idea
+.pytest_cache
+*.pyc
+*.sqlite
+api/
+logstash/

@@ -1,0 +1,12 @@
+{
+    "name": "elasticsearch-sink",
+    "config": {
+        "connector.class": "io.confluent.connect.elasticsearch.ElasticsearchSinkConnector",
+        "connection.url": "http://elasticsearch:9200",
+        "write.method": "upsert",
+        "type.name": "_doc",
+        "topics": "rss",
+        "value.converter": "org.apache.kafka.connect.json.JsonConverter",
+        "value.converter.schemas.enable": "false"
+    }
+}
