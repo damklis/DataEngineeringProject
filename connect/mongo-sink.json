@@ -10,7 +10,6 @@
         "key.converter":"org.apache.kafka.connect.storage.StringConverter",
         "key.converter.schemas.enable":false,
         "value.converter":"org.apache.kafka.connect.storage.StringConverter",
-        "value.converter.schemas.enable":false,
-        "document.id.strategy":"com.mongodb.kafka.connect.sink.processor.id.strategy.ProvidedInValueStrategy"
+        "value.converter.schemas.enable":false
     }
 }

@@ -16,7 +16,7 @@ class Config:
 
     MAX_WORKERS = 15
 
-    NUMBER_OF_PROXIES = 50
+    NUMBER_OF_PROXIES = 60
 
     RSS_FEEDS = {
         "goal.com": "https://www.goal.com/feeds/en/news",

@@ -6,8 +6,6 @@
         "write.method": "upsert",
         "type.name": "_doc",
         "topics": "rss",
-        "key.ignore": "true",
-        "schema.ignore": "true",
         "value.converter": "org.apache.kafka.connect.json.JsonConverter",
         "value.converter.schemas.enable": "false"
     }
