@@ -3,9 +3,7 @@ from proxypool import RedisProxyPoolClient
 from log import Logger
 from rss_news.rss_news_producer import NewsProducer
 from rss_news.rss_news_exporter import NewsExporter
-from rss_news.retry_on_exception import (
-    RetryOnException as retry
-)
+from retry import RetryOnException as retry
 
 
 @retry(5)
