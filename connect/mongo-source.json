@@ -1,0 +1,13 @@
+{
+    "name": "mongo-source",
+    "config": {
+      "connector.class": "io.debezium.connector.mongodb.MongoDbConnector",
+      "tasks.max": "1",
+      "mongodb.hosts": "rs0/mongo:27017",
+      "mongodb.name": "mongo",
+      "mongodb.user": "debezium",
+      "mongodb.password": "dbz",
+      "database.whitelist": "rss",
+      "database.history.kafka.bootstrap.servers": "kafka:9092"
+    }
+  }

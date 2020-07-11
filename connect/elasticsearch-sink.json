@@ -3,10 +3,12 @@
     "config": {
         "connector.class": "io.confluent.connect.elasticsearch.ElasticsearchSinkConnector",
         "connection.url": "http://elasticsearch:9200",
-        "write.method": "upsert",
         "type.name": "_doc",
-        "topics": "rss",
+        "topics": "mogno.rss.rss",
+        "transforms":"unwrap",
+        "transforms.unwrap.type":"io.debezium.connector.mongodb.transforms.ExtractNewDocumentState",
+        "transforms.unwrap.flatten.struct":true,
         "value.converter": "org.apache.kafka.connect.json.JsonConverter",
-        "value.converter.schemas.enable": "false"
+        "value.converter.schemas.enable":false
     }
 }

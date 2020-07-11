@@ -19,10 +19,10 @@ class RetryOnException:
                 except Exception as err:
                     self.logger.info(f"Error occured: {err}")
                     self._retries -= 1
-                    self._raise_exception(self._retries, err)
+                    self._raise_on_condition(self._retries, err)
         return wrapper
 
-    def _raise_exception(self, retries, exception):
+    def _raise_on_condition(self, retries, exception):
         if retries == 0: 
             raise exception
         else: 
