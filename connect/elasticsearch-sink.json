@@ -3,12 +3,17 @@
     "config": {
         "connector.class": "io.confluent.connect.elasticsearch.ElasticsearchSinkConnector",
         "connection.url": "http://elasticsearch:9200",
-        "type.name": "_doc",
-        "topics": "mogno.rss.rss",
-        "transforms":"unwrap",
-        "transforms.unwrap.type":"io.debezium.connector.mongodb.transforms.ExtractNewDocumentState",
-        "transforms.unwrap.flatten.struct":true,
-        "value.converter": "org.apache.kafka.connect.json.JsonConverter",
-        "value.converter.schemas.enable":false
+        "type.name": "kafka-connect",
+        "topics": "mongo.rss.rss",
+        "key.converter":"org.apache.kafka.connect.json.JsonConverter",
+        "key.converter.schemas.enable":false,
+        "value.converter":"org.apache.kafka.connect.json.JsonConverter",
+        "value.converter.schemas.enable":true,
+        "topic.schema.ignore":true,
+        "transforms": "InsertKey,extractKey",
+        "transforms.InsertKey.type":"org.apache.kafka.connect.transforms.ValueToKey",
+        "transforms.InsertKey.fields":"news_id",
+        "transforms.extractKey.type":"org.apache.kafka.connect.transforms.ExtractField$Key",
+        "transforms.extractKey.field":"news_id"
     }
 }

@@ -1,13 +1,16 @@
 {
     "name": "mongo-source",
     "config": {
-      "connector.class": "io.debezium.connector.mongodb.MongoDbConnector",
-      "tasks.max": "1",
-      "mongodb.hosts": "rs0/mongo:27017",
-      "mongodb.name": "mongo",
-      "mongodb.user": "debezium",
-      "mongodb.password": "dbz",
-      "database.whitelist": "rss",
-      "database.history.kafka.bootstrap.servers": "kafka:9092"
+      "connector.class":"com.mongodb.kafka.connect.MongoSourceConnector",
+      "connection.uri": "mongodb://debezium:dbz@mongo:27017/?replicaSet=rs0",
+      "topic.prefix": "mongo",
+      "database": "rss",
+      "collection": "rss",
+      "copy.existing": true,
+      "key.converter":"org.apache.kafka.connect.storage.StringConverter",
+      "value.converter": "org.apache.kafka.connect.storage.StringConverter",
+      "value.converter.schemas.enable":true,
+      "publish.full.document.only": true,
+      "pipeline": "[{\"$match\": {\"operationType\": \"insert\"}}]"
     }
   }
