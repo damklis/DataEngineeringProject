@@ -9,8 +9,8 @@
       "copy.existing": true,
       "key.converter":"org.apache.kafka.connect.storage.StringConverter",
       "value.converter": "org.apache.kafka.connect.storage.StringConverter",
-      "value.converter.schemas.enable":true,
+      "value.converter.schemas.enable":false,
       "publish.full.document.only": true,
-      "pipeline": "[{\"$match\": {\"operationType\": \"insert\"}}]"
+      "pipeline": "[{\"$match\": {\"operationType\": \"insert\"}}, {\"$unset\": \"_id\"}]"
     }
   }

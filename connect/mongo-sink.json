@@ -7,9 +7,9 @@
         "connection.uri":"mongodb://debezium:dbz@mongo:27017/?replicaSet=rs0",
         "database":"rss",
         "collection":"rss",
-        "key.converter":"org.apache.kafka.connect.json.JsonConverter",
+        "key.converter":"org.apache.kafka.connect.storage.StringConverter",
         "key.converter.schemas.enable":false,
-        "value.converter":"org.apache.kafka.connect.json.JsonConverter",
-        "value.converter.schemas.enable":true
+        "value.converter":"org.apache.kafka.connect.storage.StringConverter",
+        "value.converter.schemas.enable":false
     }
 }
