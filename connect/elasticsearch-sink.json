@@ -3,10 +3,13 @@
     "config": {
         "connector.class": "io.confluent.connect.elasticsearch.ElasticsearchSinkConnector",
         "connection.url": "http://elasticsearch:9200",
-        "write.method": "upsert",
-        "type.name": "_doc",
-        "topics": "rss",
-        "value.converter": "org.apache.kafka.connect.json.JsonConverter",
-        "value.converter.schemas.enable": "false"
+        "type.name": "kafka-connect",
+        "topics": "mongo.rss.rss",
+        "key.ignore": "true",
+        "schema.ignore": "true",
+        "key.converter": "org.apache.kafka.connect.json.JsonConverter",
+        "key.converter.schemas.enable":"false",
+        "value.converter":"org.apache.kafka.connect.json.JsonConverter",
+        "value.converter.schemas.enable":"false"
     }
 }

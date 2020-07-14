@@ -90,21 +90,22 @@ services:
         ports:
             - 9200:9200
 
-    logstash:
-        container_name: logstash
-        build: ./logstash
-        volumes:
-            - "./logstash/pipeline:/usr/share/logstash/pipeline"
-        depends_on:
-            - elasticsearch
-            - kafka
+    # logstash:
+    #     container_name: logstash
+    #     build: ./logstash
+    #     volumes:    
+    #         - "./logstash/pipeline:/usr/share/logstash/pipeline"
+    #     depends_on:
+    #         - elasticsearch
 
     mongo:
         container_name: mongo
         image: mongo:4.2
         ports:
             - 27017:27017
-        command: ["mongod"]
+        command: ["mongod", "--replSet", "rs0", "--auth"]
+        volumes:
+            - ./mongo/init.sh:/usr/local/bin/init.sh
 
     # kibana:
     #     container_name: kibana

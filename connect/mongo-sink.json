@@ -4,12 +4,13 @@
         "connector.class":"com.mongodb.kafka.connect.MongoSinkConnector",
         "tasks.max":"1",
         "topics":"rss",
-        "connection.uri":"mongodb://mongo:27017",
+        "connection.uri":"mongodb://debezium:dbz@mongo:27017/?replicaSet=rs0",
         "database":"rss",
         "collection":"rss",
         "key.converter":"org.apache.kafka.connect.storage.StringConverter",
         "key.converter.schemas.enable":false,
         "value.converter":"org.apache.kafka.connect.storage.StringConverter",
-        "value.converter.schemas.enable":false
+        "value.converter.schemas.enable":false, 
+        "document.id.strategy": "com.mongodb.kafka.connect.sink.processor.id.strategy.ProvidedInValueStrategy"
     }
 }

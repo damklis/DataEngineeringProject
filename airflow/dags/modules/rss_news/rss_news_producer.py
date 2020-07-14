@@ -13,7 +13,7 @@ class News:
     title: str
     link: str
     published: str
-    news_id: str
+    _id: str
     
     def as_dict(self):
         return self.__dict__
@@ -30,13 +30,13 @@ class NewsProducer:
     def get_news_stream(self, proxies):
         rss_feed = self._extract_rss_feed(proxies) 
         for entry in rss_feed.items:
-            news_id = self.construct_id(entry.title)
+            _id = self.construct_id(entry.title)
             published_date = self.unify_date(entry.pub_date)
             yield News(
                 entry.title,
                 entry.link,
                 published_date,
-                news_id
+                _id
             )
 
     @staticmethod

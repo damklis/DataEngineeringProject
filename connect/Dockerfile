@@ -2,6 +2,7 @@ FROM confluentinc/cp-kafka-connect-base:5.3.1
 
 RUN confluent-hub install --no-prompt mongodb/kafka-connect-mongodb:latest
 RUN confluent-hub install --no-prompt confluentinc/kafka-connect-elasticsearch:5.4.0
+RUN confluent-hub install --no-prompt debezium/debezium-connector-mongodb:0.10.0
 
 
 ENV CONNECT_KAFKA_HEAP_OPTS "-Xms512m -Xmx512m"
