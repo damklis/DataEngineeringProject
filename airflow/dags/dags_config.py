@@ -23,7 +23,6 @@ class Config:
         "eyefootball": "https://www.eyefootball.com/football_news.xml",
         "101greatgoals": "https://www.101greatgoals.com/feed/",
         "sportslens": "https://sportslens.com/feed/"
-
     }
 
     BOOTSTRAP_SERVERS = ["kafka:9092"] 

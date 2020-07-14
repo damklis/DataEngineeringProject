@@ -9,11 +9,11 @@
       "mongodb.password": "dbz",
       "database.whitelist": "rss",
       "database.history.kafka.bootstrap.servers": "kafka:9092",
-      "key.converter":"org.apache.kafka.connect.storage.StringConverter",
-      "value.converter": "org.apache.kafka.connect.storage.StringConverter",
+      "key.converter":"org.apache.kafka.connect.json.JsonConverter",
+      "value.converter": "org.apache.kafka.connect.json.JsonConverter",
       "value.converter.schemas.enable":false,
       "transforms": "mongoflatten",
       "transforms.mongoflatten.type": "io.debezium.connector.mongodb.transforms.ExtractNewDocumentState",
-      "transforms.mongoflatten.drop.tombstones": "false"
+      "transforms.mongoflatten.drop.tombstones": false
     }
   }
