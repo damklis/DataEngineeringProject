@@ -5,4 +5,3 @@ __pycache__
 *.pyc
 *.sqlite
 api/
-logstash/
