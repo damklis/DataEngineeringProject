@@ -33,7 +33,7 @@ def exporting_events(config, rss_feed, dag):
 dag = DAG(
     "rss_news_dag",
     description="scrape rss feeds and export events to broker using proxypool",
-    schedule_interval="0 12 * * *",
+    schedule_interval="*/10 * * * *",
     start_date=datetime(2020, 1, 1),
     catchup=False
 )
