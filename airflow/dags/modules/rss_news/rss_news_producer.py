@@ -21,7 +21,7 @@ class News:
 
 class NewsProducer:
     def __init__(self, rss_feed):
-        self.parser = WebParser(rss_feed)
+        self.parser = WebParser(rss_feed, rotate_header=True)
 
     def _extract_rss_feed(self, proxies):
         content = self.parser.get_content(proxies=proxies)

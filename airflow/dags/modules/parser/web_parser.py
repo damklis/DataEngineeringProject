@@ -1,17 +1,28 @@
 
 import re
+import random
 from contextlib import closing
 from requests import get 
 from log import log
+from parser.random_headers_list import headers_list
 
 
 @log
 class WebParser:
-    def __init__(self, website_url):
+    def __init__(self, website_url, rotate_header=False):
         self.url = website_url
+        self._rotate_header = rotate_header
+
+    def _get_random_header(self):
+        if self._rotate_header:
+            return random.choice(headers_list)
 
     def get_content(self, timeout=30, proxies=None):
-        kwargs = {"timeout": timeout, "proxies": proxies}
+        kwargs = {
+            "timeout": timeout,
+            "proxies": proxies,
+            "headers": self._get_random_header()
+        }
         try:
             with closing(get(self.url, **kwargs)) as response:
                 if self.is_good_response(response):

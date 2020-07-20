@@ -11,7 +11,7 @@ class ProxyStatus:
 class ProxyPoolValidator:
     def __init__(self, url, timeout=10):
         self.timeout = timeout 
-        self.parser = WebParser(url)
+        self.parser = WebParser(url, rotate_header=True)
 
     def validate_proxy(self, proxy_record):
         content = self.parser.get_content(
