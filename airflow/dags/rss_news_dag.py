@@ -51,9 +51,8 @@ job_1 = exporting_events(config, "goal.com", dag)
 job_2 = exporting_events(config, "eyefootball", dag)
 job_3 = exporting_events(config, "101greatgoals", dag)
 job_4 = exporting_events(config, "sportslens", dag)
-job_5 = exporting_events(config, "sportingnews", dag)
-job_6 = exporting_events(config, "deadspin", dag)
+job_5 = exporting_events(config, "deadspin", dag)
 
 finish = dummy_callable("finishing_pipeline", "finished", dag)
 
-start >> proxypool >> [job_1, job_2, job_3, job_4, job_5, job_6] >> finish
+start >> proxypool >> [job_1, job_2, job_3, job_4, job_5] >> finish
