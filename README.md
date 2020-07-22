@@ -4,6 +4,8 @@ MVP - work in progress.
 
 Check `develop` branch.
 
+![MVP Architecture](./images/mvp_architecture.png)
+
 ## Project setup
 
 - Run Mongo
