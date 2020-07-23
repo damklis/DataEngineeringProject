@@ -10,7 +10,7 @@ api = Api(app)
 class NewsEntry(Resource):
 
     elastic = Elasticsearch(
-        [{"host": "localhost", "port": 9200}]
+        [{"host": "elasticsearch", "port": 9200}]
     )
 
     def get(self, phrase):
@@ -38,4 +38,6 @@ api.add_resource(NewsEntry, "/v1/api/<string:phrase>")
 
 
 if __name__ == "__main__":
-    app.run(port=8081, debug=True)
+    app.run(
+        port=5000, host="0.0.0.0", debug=True
+    )

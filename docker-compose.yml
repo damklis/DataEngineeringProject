@@ -98,6 +98,17 @@ services:
         command: ["mongod", "--replSet", "rs0", "--auth"]
         volumes:
             - ./mongo/init.sh:/usr/local/bin/init.sh
+    
+    api:
+        container_name: api
+        build: ./api
+        ports:
+            - 5000:5000
+        depends_on:
+            - mongo
+            - elasticsearch
+        volumes:
+            - ./api/service:/service
 
 networks: 
     default:
