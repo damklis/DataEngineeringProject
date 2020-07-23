@@ -4,6 +4,7 @@ MVP - work in progress.
 
 Check `develop` branch.
 
+
 ![MVP Architecture](./images/mvp_architecture.png)
 
 ## Project setup
@@ -37,8 +38,9 @@ http POST localhost:8083/connectors @connect/mongo-dbz-source.json
 http POST localhost:8083/connectors @connect/elasticsearch-sink.json
 ```
 
-- Run API endpoint
+- Go to localhost:8080, turn on DAG `rss_news` and trigger it.
 
-```sh
-python api/api.py
-```
+- And Voila! Check the latest news about your favourite team!
+
+Example:
+http://localhost:5000/v1/api/juventus
