@@ -9,11 +9,12 @@ from parser import WebParser
 
 @dataclass(frozen=True)
 class News:
-
+    _id: str
     title: str
     link: str
     published: str
-    _id: str
+    description: str
+    author: str
     
     def as_dict(self):
         return self.__dict__
@@ -32,11 +33,17 @@ class NewsProducer:
         for entry in rss_feed.items:
             _id = self.construct_id(entry.title)
             published_date = self.unify_date(entry.pub_date)
+            description = self.format_description(
+                entry.description, entry.title
+            )
+            author = self.assign_author(entry.author)
             yield News(
+                _id,
                 entry.title,
                 entry.link,
                 published_date,
-                _id
+                description,
+                author
             )
 
     @staticmethod
@@ -48,3 +55,17 @@ class NewsProducer:
     @staticmethod
     def unify_date(date):
         return date.strftime("%Y-%m-%d %H:%M:%S")
+
+    @staticmethod
+    def format_description(description, title):
+        tmp_description = re.sub("<.*?>", "", description[:1000])
+        index = tmp_description.rfind(".")
+        short_description = tmp_description[:index+1]
+        return (
+            short_description if short_description
+            else title
+        )
+
+    @staticmethod
+    def assign_author(author):
+        return "Unknown" if not author else author
