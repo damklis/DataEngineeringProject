@@ -58,14 +58,12 @@ class NewsProducer:
 
     @staticmethod
     def format_description(description, title):
-
-        def short_description(description):
-            tmp_description = re.sub("<.*?>", "", description[:1000])
-            index = tmp_description.rfind(".")
-            return tmp_description[:index+1]
+        tmp_description = re.sub("<.*?>", "", description[:1000])
+        index = tmp_description.rfind(".")
+        short_description = tmp_description[:index+1]
         return (
-            title if not description
-            else short_description(description)
+            short_description if short_description
+            else title
         )
 
     @staticmethod

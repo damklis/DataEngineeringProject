@@ -51,8 +51,12 @@ def test_format_description(producer):
 
     title = "Lorem ipsum"
 
+    empty_description = ""
+
     result = producer.format_description(description, title)
+    result_empty = producer.format_description(empty_description, title)
     assert result == expected
+    assert result_empty == title
 
 
 @pytest.mark.parametrize(
