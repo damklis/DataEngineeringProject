@@ -6,9 +6,12 @@ import pytest
 def test_export_news_to_broker(export_news_to_broker):
     topic = "test_topic"
     news = {
-        "id": "test_id",
+        "_id": "test_id",
         "title": "test_title",
-        "date": "2020-01-01 00:00:00"
+        "link": "www.test.com",
+        "date": "2020-01-01 00:00:00",
+        "description": "Test",
+        "author": "Test"
     }
 
     export_news_to_broker(topic, news)

@@ -39,3 +39,27 @@ def test_unify_date(producer):
     result = producer.unify_date(date)
 
     assert result == expected
+
+
+def test_format_description(producer):
+    expected = """Lorem ipsum dolor sit amet, consectetur adipiscing elit, 
+    sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."""
+
+    description = """Lorem ipsum dolor sit amet, consectetur adipiscing elit, 
+    sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
+    Ut enim ad minim veniam, quis nostrud exercitation"""
+
+    title = "Lorem ipsum"
+
+    result = producer.format_description(description, title)
+    assert result == expected
+
+
+@pytest.mark.parametrize(
+    "author, expected",[(None, "Unknown"), ("Test", "Test")]
+)
+def test_assing_author(producer, author, expected):
+
+    result = producer.assign_author(author)
+
+    assert result == expected
