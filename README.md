@@ -9,19 +9,16 @@ Check `develop` branch.
 
 ## Project setup
 
-- Run Mongo
-
-```sh
-docker-compose up -d mongo
-```
-
-```sh
-docker exec mongo /usr/local/bin/init.sh
-```
-- Run other services
+- Run services
 
 ```sh
 docker-compose up -d
+```
+
+## Init Mongo replica set
+
+```sh
+docker exec mongo /usr/local/bin/init.sh
 ```
 
 - Post Kafka Connectors
