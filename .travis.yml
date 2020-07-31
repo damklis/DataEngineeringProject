@@ -8,4 +8,4 @@ services:
 before_script: pip install docker-compose
 
 script:
-    - docker-compose run airflow sh -c "pytest"
+    - docker-compose run airflow sh -c "opt/local/airflow/dags/run_unit_tests.sh"
