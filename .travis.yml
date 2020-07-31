@@ -1,0 +1,11 @@
+langugage: python
+python:
+    - "3.8"
+
+services:
+    - docker
+
+before_script: pip install docker-compose
+
+script:
+    - docker-compose run airflow sh -c "python -m pytest --show-capture=no"
