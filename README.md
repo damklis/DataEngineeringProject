@@ -1,4 +1,5 @@
 # DataEngineerWannabeProject
+[![Build Status](https://travis-ci.org/damklis/DataEngineerWannabeProject.svg?branch=master)](https://travis-ci.org//damklis/DataEngineerWannabeProject)
 
 MVP - work in progress.
 
@@ -15,7 +16,7 @@ Check `develop` branch.
 docker-compose up -d
 ```
 
-## Init Mongo replica set
+- Init Mongo replica set
 
 ```sh
 docker exec mongo /usr/local/bin/init.sh
