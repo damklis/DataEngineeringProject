@@ -24,6 +24,7 @@ services:
                 max-file: "3"
         volumes:
             - ./airflow/dags:/usr/local/airflow/dags
+            - ./airflow/modules:/usr/local/airflow/modules
         ports:
             - "8080:8080"
         command: webserver
