@@ -6,7 +6,8 @@ COPY requirements.txt .
 
 RUN pip install -r requirements.txt 
 
-ENV PYTHONPATH "${PYTHONPATH}:/usr/local/airflow/dags/modules"
+ENV PYTHONPATH "${PYTHONPATH}:/usr/local/airflow/modules"
+
 ENV EXECUTOR "Local"
 ENV AIRFLOW__SCHEDULER__MIN_FILE_PROCESS_INTERVAL "15"
 ENV AIRFLOW__WEBSERVER__WORKER_REFRESH_INTERVAL "450"
