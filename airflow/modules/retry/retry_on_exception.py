@@ -23,7 +23,7 @@ class RetryOnException:
         return wrapper
 
     def _raise_on_condition(self, retries, exception):
-        if retries == 0: 
+        if retries == 0:
             raise exception
-        else: 
+        else:
             self.logger.info(f"Retries: {retries}")

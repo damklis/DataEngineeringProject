@@ -1,7 +1,5 @@
 import json
 from unittest.mock import patch
-import pytest
-import fakeredis
 from proxypool import RedisProxyPoolClient
 
 from ..fixtures import redis_config, redis_mock, proxies
@@ -32,7 +30,7 @@ def test_list_existing_proxies(redis, redis_config, redis_mock, proxies):
 
     redis_client = RedisProxyPoolClient(key, redis_config)
     redis_client.redis = redis_mock
-    
+
     result = redis_client.list_existing_proxies()
-    
+
     assert result == proxies

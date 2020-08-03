@@ -16,5 +16,5 @@ def test_export_news_to_broker(export_news_to_broker):
     }
 
     export_news_to_broker(topic, news)
-    
+
     export_news_to_broker.assert_called_once_with(topic, news)

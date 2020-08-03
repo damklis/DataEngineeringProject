@@ -1,0 +1,6 @@
+[flake8]
+exclude:
+ __pycache__
+ random_headers_list.py
+ __init__.py
+ ./airflow/modules/tests/*

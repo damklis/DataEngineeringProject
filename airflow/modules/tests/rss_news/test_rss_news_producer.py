@@ -34,7 +34,7 @@ def test_construct_id(formatter, title, expected_id):
 
 def test_unify_date(formatter):
     expected = "2020-05-17 00:00:00"
-    
+
     date = datetime.datetime(2020, 5, 17)
     result = formatter.unify_date(date)
 

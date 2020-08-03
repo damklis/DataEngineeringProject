@@ -2,10 +2,8 @@
 import re
 from dataclasses import dataclass
 import atoma
-from dateutil import parser
 import langdetect
 from parser import WebParser
-from rss_news.rss_news_exporter import NewsExporter
 
 
 @dataclass(frozen=True)
@@ -17,7 +15,7 @@ class News:
     description: str
     author: str
     language: str
-    
+
     def as_dict(self):
         return self.__dict__
 
@@ -33,7 +31,7 @@ class NewsProducer:
         return news_feed.items
 
     def get_news_stream(self, proxies):
-        news_feed_items = self._extract_news_feed_items(proxies) 
+        news_feed_items = self._extract_news_feed_items(proxies)
         for entry in news_feed_items:
             formatted_entry = self.formatter.format_entry(entry)
             yield formatted_entry

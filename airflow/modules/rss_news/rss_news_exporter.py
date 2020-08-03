@@ -9,7 +9,7 @@ class NewsExporter:
             bootstrap_servers=bootstrap_servers,
             value_serializer=lambda x: self._encode(x)
         )
-    
+
     def _encode(self, value):
         return json.dumps(value).encode("utf-8")
 
@@ -28,4 +28,3 @@ class NewsExporter:
 
     def __exit__(self, type, value, traceback):
         self.producer.close()
-        

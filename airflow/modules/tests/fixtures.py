@@ -36,11 +36,11 @@ def proxy_record():
     yield ProxyRecord(
         "127.0.0.1",
         8080,
-        "PL", 
-        "POLAND", 
-        "gold", 
-        "no", 
-        "no", 
+        "PL",
+        "POLAND",
+        "gold",
+        "no",
+        "no",
         "30 minutes ago"
     )
 
@@ -65,7 +65,7 @@ def redis_config():
     yield {
         "host": "redis",
         "port": "6379",
-        "db": 0 
+        "db": 0
     }
 
 
@@ -76,7 +76,7 @@ def response():
         response.status_code = status_code
         response.headers['Content-Type'] = "text/html"
         return response
-    yield helper 
+    yield helper
 
 
 @pytest.fixture()
@@ -86,7 +86,7 @@ def raw_content():
             "tests",
             f"dataresources/{filename}"
         )
-    
+
     yield helper
 
 
@@ -94,7 +94,7 @@ def raw_content():
 def add_function():
 
     @retry(5)
-    def func(a , b):
+    def func(a, b):
         return a + b
 
     yield func

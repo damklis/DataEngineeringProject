@@ -1,4 +1,3 @@
-import argparse
 from proxypool import RedisProxyPoolClient
 from log import Logger
 from rss_news.rss_news_producer import NewsProducer
@@ -22,4 +21,3 @@ def export_news_to_broker(config, rss_feed):
                 config.TOPIC,
                 news.as_dict()
             )
-
