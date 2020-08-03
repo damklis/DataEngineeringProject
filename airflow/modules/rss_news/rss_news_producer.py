@@ -46,28 +46,24 @@ class NewsFormatter:
         self.default_author = "Unknown"
 
     def format_entry(self, entry):
-        _id = self.construct_id(entry.title)
-        published_date = self.unify_date(entry.pub_date)
-        description = self.format_description(entry)
-        author = self.assign_author(entry.author)
-        language = self.detect_language(entry.title)
         return News(
-            _id,
+            self.construct_id(entry.title),
             entry.title,
             entry.link,
-            published_date,
-            description,
-            author,
-            language
+            self.unify_date(entry.pub_date),
+            self.format_description(entry),
+            self.assign_author(entry.author),
+            self.detect_language(entry.title)
         )
-    def assign_author(self, author):
-        return self.default_author if not author else author
 
     def construct_id(self, title):
         return re.sub(self.id_regex, "", title).lower()
 
     def unify_date(self, date):
         return date.strftime(self.date_format)
+
+    def assign_author(self, author):
+        return self.default_author if not author else author
 
     @staticmethod
     def format_description(entry):
