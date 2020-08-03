@@ -3,8 +3,10 @@ import re
 from dataclasses import dataclass
 import atoma
 from dateutil import parser
+import langdetect
 from parser import WebParser
 from rss_news.rss_news_exporter import NewsExporter
+
 
 @dataclass(frozen=True)
 class News:
@@ -14,6 +16,7 @@ class News:
     published: str
     description: str
     author: str
+    language: str
     
     def as_dict(self):
         return self.__dict__
@@ -43,14 +46,20 @@ class NewsFormatter:
         published_date = self.unify_date(entry.pub_date)
         description = self.format_description(entry)
         author = self.assign_author(entry.author)
+        language = self.detect_language(entry.title)
         return News(
             _id,
             entry.title,
             entry.link,
             published_date,
             description,
-            author
+            author,
+            language
         )
+    
+    @staticmethod
+    def detect_language(title):
+        return langdetect.detect(title)
 
     @staticmethod
     def construct_id(title):

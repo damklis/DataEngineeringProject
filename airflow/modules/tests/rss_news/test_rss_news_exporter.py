@@ -11,7 +11,8 @@ def test_export_news_to_broker(export_news_to_broker):
         "link": "www.test.com",
         "date": "2020-01-01 00:00:00",
         "description": "Test",
-        "author": "Test"
+        "author": "Test",
+        "language": "pl"
     }
 
     export_news_to_broker(topic, news)

@@ -6,4 +6,5 @@ lxml==4.5.1
 redis==3.5.3
 requests==2.23.0
 fakeredis==1.4.1
+langdetect==1.0.8
 pytest==5.4.3
