@@ -8,4 +8,4 @@ requests==2.23.0
 fakeredis==1.4.1
 langdetect==1.0.8
 pytest==5.4.3
-flake8=3.8.3
+flake8==3.8.3
