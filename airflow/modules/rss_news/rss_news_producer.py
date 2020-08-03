@@ -40,6 +40,10 @@ class NewsProducer:
 
 
 class NewsFormatter:
+    def __init__(self):
+        self.date_format = "%Y-%m-%d %H:%M:%S"
+        self.id_regex = "[^0-9a-zA-Z_-]+"
+        self.default_author = "Unknown"
 
     def format_entry(self, entry):
         _id = self.construct_id(entry.title)
@@ -56,19 +60,14 @@ class NewsFormatter:
             author,
             language
         )
-    
-    @staticmethod
-    def detect_language(title):
-        lower_title = title.lower()
-        return langdetect.detect(lower_title)
+    def assign_author(self, author):
+        return self.default_author if not author else author
 
-    @staticmethod
-    def construct_id(title):
-        return re.sub("[^0-9a-zA-Z_-]+", "", title).lower()
+    def construct_id(self, title):
+        return re.sub(self.id_regex, "", title).lower()
 
-    @staticmethod
-    def unify_date(date):
-        return date.strftime("%Y-%m-%d %H:%M:%S")
+    def unify_date(self, date):
+        return date.strftime(self.date_format)
 
     @staticmethod
     def format_description(entry):
@@ -81,5 +80,6 @@ class NewsFormatter:
         )
 
     @staticmethod
-    def assign_author(author):
-        return "Unknown" if not author else author
+    def detect_language(title):
+        lower_title = title.lower()
+        return langdetect.detect(lower_title)
