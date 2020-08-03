@@ -43,20 +43,23 @@ def test_unify_date(formatter):
 
 def test_format_description(formatter):
     expected = """Lorem ipsum dolor sit amet, consectetur adipiscing elit, 
-    sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."""
+        sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."""
 
-    description = """Lorem ipsum dolor sit amet, consectetur adipiscing elit, 
-    sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
-    Ut enim ad minim veniam, quis nostrud exercitation"""
+    class Entry:
+        description = """Lorem ipsum dolor sit amet, consectetur adipiscing elit, 
+        sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
+        Ut enim ad minim veniam, quis nostrud exercitation"""
+        title = "Lorem ipsum"
 
-    title = "Lorem ipsum"
+    class EmptyEntry:
+        description = ""
+        title = "Lorem ipsum"
 
-    empty_description = ""
+    result = formatter.format_description(Entry)
+    result_empty = formatter.format_description(EmptyEntry)
 
-    result = formatter.format_description(description, title)
-    result_empty = formatter.format_description(empty_description, title)
     assert result == expected
-    assert result_empty == title
+    assert result_empty == EmptyEntry.title
 
 
 @pytest.mark.parametrize(

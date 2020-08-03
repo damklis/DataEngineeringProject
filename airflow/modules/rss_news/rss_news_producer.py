@@ -41,9 +41,7 @@ class NewsFormatter:
     def format_entry(self, entry):
         _id = self.construct_id(entry.title)
         published_date = self.unify_date(entry.pub_date)
-        description = self.format_description(
-            entry.description, entry.title
-        )
+        description = self.format_description(entry)
         author = self.assign_author(entry.author)
         return News(
             _id,
@@ -63,13 +61,13 @@ class NewsFormatter:
         return date.strftime("%Y-%m-%d %H:%M:%S")
 
     @staticmethod
-    def format_description(description, title):
-        tmp_description = re.sub("<.*?>", "", description[:1000])
+    def format_description(entry):
+        tmp_description = re.sub("<.*?>", "", entry.description[:1000])
         index = tmp_description.rfind(".")
         short_description = tmp_description[:index+1]
         return (
             short_description if short_description
-            else title
+            else entry.title
         )
 
     @staticmethod
