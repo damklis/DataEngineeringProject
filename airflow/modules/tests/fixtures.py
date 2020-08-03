@@ -3,7 +3,7 @@ import pytest
 import fakeredis
 from parser import WebParser
 from requests import Response
-from rss_news import NewsProducer
+from rss_news import NewsProducer, NewsFormatter
 from proxypool import ProxyPoolScraper, ProxyRecord
 from retry import RetryOnException as retry
 
@@ -48,6 +48,11 @@ def proxy_record():
 @pytest.fixture
 def producer():
     yield NewsProducer(TEST_URL)
+
+
+@pytest.fixture
+def formatter():
+    yield NewsFormatter()
 
 
 @pytest.fixture

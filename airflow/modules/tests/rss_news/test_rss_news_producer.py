@@ -3,7 +3,7 @@ from unittest.mock import patch
 import pytest
 from rss_news import News
 
-from ..fixtures import web_parser, raw_content, producer, proxies
+from ..fixtures import web_parser, raw_content, producer, proxies, formatter
 
 
 @patch("parser.web_parser.WebParser.get_content")
@@ -25,23 +25,23 @@ def test_get_news_stream(get_content, web_parser, raw_content, producer, proxies
         ("example%%%%%%%2 example", "example2example"),
         ("*******example-3_  xx  example", "example-3_xxexample")]
 )
-def test_construct_id(producer, title, expected_id):
+def test_construct_id(formatter, title, expected_id):
 
-    result = producer.construct_id(title)
+    result = formatter.construct_id(title)
 
     assert result == expected_id
 
 
-def test_unify_date(producer):
+def test_unify_date(formatter):
     expected = "2020-05-17 00:00:00"
     
     date = datetime.datetime(2020, 5, 17)
-    result = producer.unify_date(date)
+    result = formatter.unify_date(date)
 
     assert result == expected
 
 
-def test_format_description(producer):
+def test_format_description(formatter):
     expected = """Lorem ipsum dolor sit amet, consectetur adipiscing elit, 
     sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."""
 
@@ -53,8 +53,8 @@ def test_format_description(producer):
 
     empty_description = ""
 
-    result = producer.format_description(description, title)
-    result_empty = producer.format_description(empty_description, title)
+    result = formatter.format_description(description, title)
+    result_empty = formatter.format_description(empty_description, title)
     assert result == expected
     assert result_empty == title
 
@@ -62,8 +62,8 @@ def test_format_description(producer):
 @pytest.mark.parametrize(
     "author, expected",[(None, "Unknown"), ("Test", "Test")]
 )
-def test_assing_author(producer, author, expected):
+def test_assing_author(formatter, author, expected):
 
-    result = producer.assign_author(author)
+    result = formatter.assign_author(author)
 
     assert result == expected

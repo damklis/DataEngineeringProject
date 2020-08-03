@@ -1,11 +1,10 @@
 
 import re
-from dataclasses import dataclass, asdict
+from dataclasses import dataclass
 import atoma
 from dateutil import parser
-from rss_news.rss_news_exporter import NewsExporter
 from parser import WebParser
-
+from rss_news.rss_news_exporter import NewsExporter
 
 @dataclass(frozen=True)
 class News:
@@ -23,34 +22,41 @@ class News:
 class NewsProducer:
     def __init__(self, rss_feed):
         self.parser = WebParser(rss_feed, rotate_header=True)
+        self.formatter = NewsFormatter()
 
-    def _extract_rss_feed(self, proxies):
+    def _extract_news_feed_items(self, proxies):
         content = self.parser.get_content(proxies=proxies)
-        return atoma.parse_rss_bytes(content)
+        news_feed = atoma.parse_rss_bytes(content)
+        return news_feed.items
 
     def get_news_stream(self, proxies):
-        rss_feed = self._extract_rss_feed(proxies) 
-        for entry in rss_feed.items:
-            _id = self.construct_id(entry.title)
-            published_date = self.unify_date(entry.pub_date)
-            description = self.format_description(
-                entry.description, entry.title
-            )
-            author = self.assign_author(entry.author)
-            yield News(
-                _id,
-                entry.title,
-                entry.link,
-                published_date,
-                description,
-                author
-            )
+        news_feed_items = self._extract_news_feed_items(proxies) 
+        for entry in news_feed_items:
+            formatted_entry = self.formatter.format_entry(entry)
+            yield formatted_entry
+
+
+class NewsFormatter:
+
+    def format_entry(self, entry):
+        _id = self.construct_id(entry.title)
+        published_date = self.unify_date(entry.pub_date)
+        description = self.format_description(
+            entry.description, entry.title
+        )
+        author = self.assign_author(entry.author)
+        return News(
+            _id,
+            entry.title,
+            entry.link,
+            published_date,
+            description,
+            author
+        )
 
     @staticmethod
     def construct_id(title):
-        return (
-            re.sub("[^0-9a-zA-Z_-]+", "", title).lower()
-        )
+        return re.sub("[^0-9a-zA-Z_-]+", "", title).lower()
 
     @staticmethod
     def unify_date(date):
