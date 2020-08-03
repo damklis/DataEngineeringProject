@@ -59,7 +59,8 @@ class NewsFormatter:
     
     @staticmethod
     def detect_language(title):
-        return langdetect.detect(title)
+        lower_title = title.lower()
+        return langdetect.detect(lower_title)
 
     @staticmethod
     def construct_id(title):
