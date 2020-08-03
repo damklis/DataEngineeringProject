@@ -5,4 +5,9 @@ __pycache__
 .pytest_cache
 *.pyc
 *.sqlite
+
+## Django
 *.sqlite3
+news_api/
+news_project/
+manage.py
