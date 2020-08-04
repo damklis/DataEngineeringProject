@@ -2,7 +2,7 @@
 import re
 import random
 from contextlib import closing
-from requests import get 
+from requests import get
 from log import log
 from parser.random_headers_list import headers_list
 

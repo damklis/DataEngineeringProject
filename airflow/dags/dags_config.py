@@ -9,7 +9,7 @@ class Config:
     REDIS_CONFIG = {
         "host": "redis",
         "port": "6379",
-        "db": 0 
+        "db": 0
     }
 
     REDIS_KEY = "proxies"
@@ -26,6 +26,6 @@ class Config:
         "deadspin": "https://deadspin.com/rss"
     }
 
-    BOOTSTRAP_SERVERS = ["kafka:9092"] 
+    BOOTSTRAP_SERVERS = ["kafka:9092"]
 
     TOPIC = "rss"

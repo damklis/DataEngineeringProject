@@ -1,9 +1,8 @@
 
 import re
-from dataclasses import dataclass, asdict
+from dataclasses import dataclass
 import atoma
-from dateutil import parser
-from rss_news.rss_news_exporter import NewsExporter
+import langdetect
 from parser import WebParser
 
 
@@ -15,7 +14,8 @@ class News:
     published: str
     description: str
     author: str
-    
+    language: str
+
     def as_dict(self):
         return self.__dict__
 
@@ -23,49 +23,57 @@ class News:
 class NewsProducer:
     def __init__(self, rss_feed):
         self.parser = WebParser(rss_feed, rotate_header=True)
+        self.formatter = NewsFormatter()
 
-    def _extract_rss_feed(self, proxies):
+    def _extract_news_feed_items(self, proxies):
         content = self.parser.get_content(proxies=proxies)
-        return atoma.parse_rss_bytes(content)
+        news_feed = atoma.parse_rss_bytes(content)
+        return news_feed.items
 
     def get_news_stream(self, proxies):
-        rss_feed = self._extract_rss_feed(proxies) 
-        for entry in rss_feed.items:
-            _id = self.construct_id(entry.title)
-            published_date = self.unify_date(entry.pub_date)
-            description = self.format_description(
-                entry.description, entry.title
-            )
-            author = self.assign_author(entry.author)
-            yield News(
-                _id,
-                entry.title,
-                entry.link,
-                published_date,
-                description,
-                author
-            )
+        news_feed_items = self._extract_news_feed_items(proxies)
+        for entry in news_feed_items:
+            formatted_entry = self.formatter.format_entry(entry)
+            yield formatted_entry
 
-    @staticmethod
-    def construct_id(title):
-        return (
-            re.sub("[^0-9a-zA-Z_-]+", "", title).lower()
+
+class NewsFormatter:
+    def __init__(self):
+        self.date_format = "%Y-%m-%d %H:%M:%S"
+        self.id_regex = "[^0-9a-zA-Z_-]+"
+        self.default_author = "Unknown"
+
+    def format_entry(self, entry):
+        return News(
+            self.construct_id(entry.title),
+            entry.title,
+            entry.link,
+            self.unify_date(entry.pub_date),
+            self.format_description(entry),
+            self.assign_author(entry.author),
+            self.detect_language(entry.title)
         )
 
-    @staticmethod
-    def unify_date(date):
-        return date.strftime("%Y-%m-%d %H:%M:%S")
+    def construct_id(self, title):
+        return re.sub(self.id_regex, "", title).lower()
+
+    def unify_date(self, date):
+        return date.strftime(self.date_format)
+
+    def assign_author(self, author):
+        return self.default_author if not author else author
 
     @staticmethod
-    def format_description(description, title):
-        tmp_description = re.sub("<.*?>", "", description[:1000])
+    def format_description(entry):
+        tmp_description = re.sub("<.*?>", "", entry.description[:1000])
         index = tmp_description.rfind(".")
         short_description = tmp_description[:index+1]
         return (
             short_description if short_description
-            else title
+            else entry.title
         )
 
     @staticmethod
-    def assign_author(author):
-        return "Unknown" if not author else author
+    def detect_language(title):
+        lower_title = title.lower()
+        return langdetect.detect(lower_title)

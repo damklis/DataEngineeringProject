@@ -13,9 +13,9 @@ def update_proxypool(config):
     with ThreadPoolExecutor(max_workers=config.MAX_WORKERS) as executor:
         results = executor.map(proxy_validator.validate_proxy, proxy_stream)
         valid_proxies = filter(
-            lambda x: x.is_valid == True, results
+            lambda x: x.is_valid is True, results
         )
-        
+
     with RedisProxyPoolClient(config.REDIS_KEY, config.REDIS_CONFIG) as client:
         client.override_existing_proxies(
              [json.dumps(record.proxy) for record in valid_proxies]

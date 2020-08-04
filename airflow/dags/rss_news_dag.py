@@ -1,18 +1,16 @@
 from datetime import datetime
 from airflow import DAG
 from airflow.operators.python_operator import PythonOperator
-from airflow.operators.bash_operator import BashOperator
 from dags_config import Config as config
 
 from rss_news import export_news_to_broker
 from proxypool import update_proxypool
 
 
-
 def dummy_callable(task_id, action, dag):
     def foo(action):
         return f"{datetime.now()}: {action} scrapping RSS feeds!"
-    
+
     return PythonOperator(
         task_id=task_id,
         python_callable=foo,
@@ -39,7 +37,7 @@ dag = DAG(
 )
 
 proxypool = PythonOperator(
-    task_id=f"updating_proxypoool",
+    task_id="updating_proxypoool",
     python_callable=update_proxypool,
     op_kwargs={"config": config},
     dag=dag

@@ -1,12 +1,12 @@
 from bs4 import BeautifulSoup
-from dataclasses import dataclass, field, asdict
+from dataclasses import dataclass, field
 from parser import WebParser
 
 
 @dataclass
 class ProxyRecord:
     ip_address: str
-    port: int 
+    port: int
     country_code: str
     country: str
     anonymity: str
@@ -20,7 +20,7 @@ class ProxyRecord:
 
     def format_proxy(self):
         protocol = "https" if self.https == "yes" else "http"
-        url = f"{protocol}://{self.ip_address}:{self.port}" 
+        url = f"{protocol}://{self.ip_address}:{self.port}"
         return {"http": url, "https": url}
 
 
@@ -35,7 +35,8 @@ class ProxyPoolScraper:
             map(self._clear_up_record, raw_records)
         )
         for record in clean_records[:limit]:
-            if record: yield ProxyRecord(*record)
+            if record:
+                yield ProxyRecord(*record)
 
     def extract_table_raw_records(self):
         content = self.parser.get_content()
@@ -48,6 +49,6 @@ class ProxyPoolScraper:
 
     def _clear_up_record(self, raw_record):
         return [
-            val.text for val 
+            val.text for val
             in raw_record.find_all("td")
         ]

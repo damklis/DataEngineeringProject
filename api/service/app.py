@@ -22,7 +22,7 @@ class NewsEntry(Resource):
                         "title": phrase
                     }
                 }
-            } 
+            }
         )
 
         news_list = response.get("hits").get("hits")
