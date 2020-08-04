@@ -8,4 +8,4 @@ services:
 before_script: pip install docker-compose flake8
 
 script:
-    - docker-compose run airflow sh -c "python -m pytest -v --show-capture=no" && python -m flake8
+    - docker-compose run airflow sh -c "python -m pytest -v --show-capture=no" && python -m flake8 -v
