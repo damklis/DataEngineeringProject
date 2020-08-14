@@ -14,6 +14,4 @@ class NewsValidator:
 
     def check_description_length(self, news):
         _news = news.as_dict()
-        return len(
-            _news.get("description") >= self.description_length
-        )
+        return len(_news.get("description")) >= self.description_length
