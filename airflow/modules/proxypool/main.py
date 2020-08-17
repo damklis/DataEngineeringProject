@@ -1,10 +1,12 @@
 import json
+from concurrent.futures import ThreadPoolExecutor
 from proxypool.proxypool_validator import ProxyPoolValidator
 from proxypool.proxypool_scraper import ProxyPoolScraper
 from proxypool.redis_proxypool_client import RedisProxyPoolClient
-from concurrent.futures import ThreadPoolExecutor
+from retry import RetryOnException as retry
 
 
+@retry(5)
 def update_proxypool(config):
     proxy_scraper = ProxyPoolScraper(config.PROXY_WEBPAGE)
     proxy_stream = proxy_scraper.get_proxy_stream(config.NUMBER_OF_PROXIES)

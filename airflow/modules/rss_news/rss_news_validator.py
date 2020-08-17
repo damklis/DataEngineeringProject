@@ -1,7 +1,7 @@
 
 
 class NewsValidator:
-    def __init__(self, description_length=100):
+    def __init__(self, description_length=10):
         self.description_length = description_length
 
     def validate_news(self, news):

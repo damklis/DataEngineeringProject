@@ -18,7 +18,21 @@ def test_check_null_values(validator):
     assert result is expected
 
 
-def test_check_null_values_raises_error(validator):
+def test_check_null_values_with_nones(validator):
+    expected = False
+
+    news = News(
+        "test_id", None, "test_link",
+        "test_pub", "test_desc", None,
+        "test_lang"
+    )
+    
+    result = validator.check_null_values(news)
+
+    assert result is expected
+
+
+def test_validate_news_raises_error(validator):
     news = News(
         "test_id", None, "test_link",
         "test_pub", "test_desc", None,
@@ -26,4 +40,4 @@ def test_check_null_values_raises_error(validator):
     )
     
     with pytest.raises(AssertionError):
-        validator.check_null_values(news)
+        validator.validate_news(news)

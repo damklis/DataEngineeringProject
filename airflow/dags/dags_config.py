@@ -14,9 +14,9 @@ class Config:
 
     REDIS_KEY = "proxies"
 
-    MAX_WORKERS = 15
+    MAX_WORKERS = 20
 
-    NUMBER_OF_PROXIES = 60
+    NUMBER_OF_PROXIES = 100
 
     RSS_FEEDS = {
         "goal.com": "https://www.goal.com/feeds/en/news",
