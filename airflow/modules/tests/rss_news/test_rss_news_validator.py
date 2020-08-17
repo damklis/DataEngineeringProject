@@ -1,43 +1,41 @@
 import pytest
 from rss_news import News
 
-from ..fixtures import validator
+from ..fixtures import validator, news_record
 
 
-def test_check_null_values(validator):
+def test_check_null_values(validator, news_record):
     expected = True
 
-    news = News(
-        "test_id", "test_title", "test_link",
-        "test_pub","test_desc", "test_author",
-        "test_lang"
-    )
+    news = news_record.as_dict()
 
     result = validator.check_null_values(news)
     
     assert result is expected
 
 
-def test_check_null_values_with_nones(validator):
+def test_check_null_values_with_nones(validator, news_record):
     expected = False
 
-    news = News(
-        "test_id", None, "test_link",
-        "test_pub", "test_desc", None,
-        "test_lang"
-    )
+    news = news_record.as_dict()
+    news["id"] = None
     
     result = validator.check_null_values(news)
 
     assert result is expected
 
 
-def test_validate_news_raises_error(validator):
-    news = News(
-        "test_id", None, "test_link",
-        "test_pub", "test_desc", None,
-        "test_lang"
-    )
+def test_check_language(validator, news_record):
+    expected = True
+
+    news = news_record.as_dict()
+    
+    result = validator.check_languages(news)
+
+    assert result is expected
+
+
+def test_validate_news_raises_error(validator, news_record):
     
     with pytest.raises(AssertionError):
-        validator.validate_news(news)
+        validator.validate_news(news_record)

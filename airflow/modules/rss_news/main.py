@@ -9,8 +9,9 @@ from retry import RetryOnException as retry
 @retry(5)
 def export_news_to_broker(config, rss_feed):
     logger = Logger().get_logger(__name__)
+
     rss_feed = config.RSS_FEEDS[rss_feed]
-    validator = NewsValidator()
+    validator = NewsValidator(config.VALIDATOR_CONFIG)
     redis = RedisProxyPoolClient(
         config.REDIS_KEY, config.REDIS_CONFIG
     )
