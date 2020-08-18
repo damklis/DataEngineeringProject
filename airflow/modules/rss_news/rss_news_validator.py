@@ -1,17 +1,26 @@
 
 
 class NewsValidator:
-    def __init__(self, description_length=10):
-        self.description_length = description_length
+    def __init__(self, config):
+        self._config = config
 
     def validate_news(self, news):
+        news = news.as_dict()
         assert self.check_null_values(news), "Null values!"
         assert self.check_description_length(news), "Short description!"
+        assert self.check_languages(news), "Wrong language!"
 
     def check_null_values(self, news):
-        news_values = list(news.as_dict().values())
+        news_values = list(news.values())
         return all(news_values)
 
     def check_description_length(self, news):
-        _news = news.as_dict()
-        return len(_news.get("description")) >= self.description_length
+        description_length = self._config.get("description_length")
+        return len(news.get("description")) >= description_length
+
+    def check_languages(self, news):
+        languages = self._config.get("languages")
+        lang = news.get("language")
+        return any(
+            filter(lambda x: x == lang, languages)
+        )
