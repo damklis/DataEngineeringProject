@@ -21,4 +21,6 @@ class NewsValidator:
     def check_languages(self, news):
         languages = self._config.get("languages")
         lang = news.get("language")
-        return any(filter(lambda x: x == lang, languages))
+        return any(
+            filter(lambda x: x == lang, languages)
+        )
