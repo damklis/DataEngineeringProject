@@ -6,7 +6,7 @@
         "topics":"rss",
         "connection.uri":"mongodb://debezium:dbz@mongo:27017/?replicaSet=rs0",
         "database":"rss",
-        "collection":"rss",
+        "collection":"news_rss",
         "key.converter":"org.apache.kafka.connect.storage.StringConverter",
         "key.converter.schemas.enable":false,
         "value.converter":"org.apache.kafka.connect.storage.StringConverter",
