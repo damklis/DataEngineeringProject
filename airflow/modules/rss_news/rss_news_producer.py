@@ -77,4 +77,4 @@ class NewsFormatter:
     @staticmethod
     def detect_language(description):
         lower_description = description.lower()
-        return langdetect.detect(description)
+        return langdetect.detect(lower_description)
