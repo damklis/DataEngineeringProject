@@ -28,7 +28,7 @@ class Config:
 
     BOOTSTRAP_SERVERS = ["kafka:9092"]
 
-    TOPIC = "rss"
+    TOPIC = "rss_news"
 
     VALIDATOR_CONFIG = {
         "description_length": 10,

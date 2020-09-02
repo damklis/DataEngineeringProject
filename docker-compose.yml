@@ -104,12 +104,12 @@ services:
         container_name: api
         build: ./api
         ports:
-            - 5000:5000
+            - 8000:8000
         depends_on:
             - mongo
             - elasticsearch
         volumes:
-            - ./api/service:/service
+            - ./api/app:/app
 
 networks: 
     default:

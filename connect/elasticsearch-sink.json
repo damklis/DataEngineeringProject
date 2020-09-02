@@ -4,7 +4,7 @@
         "connector.class":"io.confluent.connect.elasticsearch.ElasticsearchSinkConnector",
         "connection.url":"http://elasticsearch:9200",
         "type.name":"kafka-connect",
-        "topics":"mongo.rss.rss",
+        "topics":"unique.rss_news.rss_news",
         "key.ignore":false,
         "schema.ignore":true,
         "key.converter": "org.apache.kafka.connect.json.JsonConverter",

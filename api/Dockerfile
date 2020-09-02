@@ -1,13 +1,13 @@
 FROM python:3
 
-ADD service/ /service
+ADD app/ /app
 
-WORKDIR /service
+WORKDIR /app 
 
-RUN apt-get update -y 
+RUN pip install -r requirements.txt \ 
+    && python manage.py makemigrations news \
+    && python manage.py migrate
 
-RUN pip install -r requirements.txt
+EXPOSE 8000
 
-EXPOSE 5000
-
-CMD ["python", "app.py"]
+CMD ["python", "manage.py", "runserver"]
