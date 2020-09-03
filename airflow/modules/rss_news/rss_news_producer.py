@@ -2,7 +2,7 @@
 import re
 from dataclasses import dataclass
 import atoma
-import langdetect
+import langid
 from parser import WebParser
 
 
@@ -76,5 +76,5 @@ class NewsFormatter:
 
     @staticmethod
     def detect_language(description):
-        lower_description = description.lower()
-        return langdetect.detect(lower_description)
+        detected_language = langid.classify(description)
+        return detected_language[0]

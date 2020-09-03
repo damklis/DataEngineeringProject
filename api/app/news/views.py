@@ -1,19 +1,12 @@
-from django.shortcuts import render
+import os
 from rest_framework import generics
-
-from rest_framework.views import APIView
 from rest_framework.response import Response
-from django.shortcuts import get_object_or_404
-from rest_framework import status
-from rest_framework.exceptions import PermissionDenied
-from .models import News
-from .serializers import NewsSerializer, UserSerializer
-from django.contrib.auth import authenticate
 from rest_framework.permissions import IsAuthenticated
 from elasticsearch import Elasticsearch
-from rest_framework.response import Response
 
+from .models import News
 from .permissions import IsStaffOrReadOnly
+from .serializers import NewsSerializer, UserSerializer
 
 
 class UserCreate(generics.CreateAPIView):
@@ -40,12 +33,14 @@ class NewsDetail(generics.RetrieveDestroyAPIView):
     lookup_field = "title"
 
     elastic = Elasticsearch(
-        host="elasticsearch", port=9200)
+        host=os.environ["ELASTIC_HOST"],
+        port=os.environ["ELASTIC_PORT"]
+    )
 
     def get(self, request, *args, **kwargs):
         title = kwargs.get('title', None)
         response = self.elastic.search(
-            index="unique.rss_news.rss_news",
+            index=os.environ["ELASTIC_INDEX"],
             body={
                 "query": {
                     "match": {
@@ -55,7 +50,7 @@ class NewsDetail(generics.RetrieveDestroyAPIView):
             }
         )
         news_list = response.get("hits").get("hits")
-        
+
         return Response(
             {
                 "results": [

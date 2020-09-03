@@ -2,7 +2,7 @@ from django.db import models
 
 
 class News(models.Model):
-    
+
     _id = models.CharField(max_length=300, primary_key=True)
     title = models.CharField(max_length=300)
     link = models.CharField(max_length=300)
@@ -12,7 +12,7 @@ class News(models.Model):
     language = models.CharField(max_length=300)
 
     class Meta:
-        
+
         db_table = "rss_news"
 
     def __str__(self):

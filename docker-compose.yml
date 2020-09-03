@@ -103,8 +103,16 @@ services:
     api:
         container_name: api
         build: ./api
+        command: >
+            sh -c "python manage.py makemigrations &&
+            python manage.py migrate &&
+            python manage.py runserver 0.0.0.0:5000"
         ports:
-            - 8000:8000
+            - 5000:5000
+        environment:
+            - ELASTIC_HOST=elasticsearch
+            - ELASTIC_PORT=9200
+            - ELASTIC_INDEX=unique.rss_news.rss_news
         depends_on:
             - mongo
             - elasticsearch
