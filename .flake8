@@ -4,4 +4,4 @@ exclude:
  random_headers_list.py
  __init__.py
  ./airflow/modules/tests/*
-./api/*
+ ./api/*
