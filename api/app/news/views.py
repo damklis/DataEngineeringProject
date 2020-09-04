@@ -13,6 +13,7 @@ from .serializers import NewsSerializer, UserSerializer
 
 
 class SwaggerSchemaView(APIView):
+    exclude_from_schema = True
     permission_classes = (AllowAny,)
     renderer_classes = [
         renderers.OpenAPIRenderer,
@@ -20,7 +21,7 @@ class SwaggerSchemaView(APIView):
     ]
 
     def get(self, request):
-        generator = SchemaGenerator()
+        generator = SchemaGenerator(title="News API")
         schema = generator.get_schema(request=request)
 
         return Response(schema)
@@ -50,8 +51,7 @@ class NewsDetail(generics.RetrieveDestroyAPIView):
     lookup_field = "title"
 
     elastic = Elasticsearch(
-        host=os.environ["ELASTIC_HOST"],
-        port=os.environ["ELASTIC_PORT"]
+        host=os.environ["ELASTIC_HOST"], port=9200
     )
 
     def get(self, request, *args, **kwargs):

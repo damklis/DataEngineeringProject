@@ -92,10 +92,10 @@ DATABASES = {
             },
         'NAME': 'rss_news',
         'CLIENT': {
-            'host': 'mongo',
+            'host': os.environ['MONGO_HOST'],
             'port': 27017,
-            'username': 'rss_news',
-            'password': 'rss_news',
+            'username': os.environ['MONGO_USR'],
+            'password': os.environ['MONGO_PASSWD'],
             'authSource': 'admin'
         }
     }
@@ -164,7 +164,7 @@ SWAGGER_SETTINGS = {
             'in': 'header',
             'name': 'Authorization'
         },
-        'is_authenticated': True
+        'is_authenticated': True,
     },
 }
 

@@ -11,10 +11,10 @@ class NewsSerializer(serializers.ModelSerializer):
         model = News
         fields = [
             "title",
-            "link", 
+            "link",
             "published",
-            "description", 
-            "author", 
+            "description",
+            "author",
             "language"
         ]
 
