@@ -1,6 +1,6 @@
 #!/bin/sh
 
-mongo localhost:27017/demo <<-EOF
+mongo localhost:27017/news <<-EOF
     rs.initiate({
         _id: "rs0",
         members: [ { _id: 0, host: getHostName() + ":27017" } ]
@@ -25,10 +25,10 @@ mongo -u admin -p admin localhost:27017/admin <<-EOF
         roles: []
     });
     db.createUser({
-        user: 'debezium',
-        pwd: 'dbz',
+        user: 'rss_news',
+        pwd: 'rss_news',
         roles: [
-            { role: "readWrite", db: "rss" },
+            { role: "readWrite", db: "rss_news" },
             { role: "read", db: "local" },
             { role: "listDatabases", db: "admin" },
             { role: "read", db: "config" },

@@ -4,9 +4,9 @@ services:
         container_name: postgres
         image: postgres:9.6
         environment:
-            - POSTGRES_USER=airflow
-            - POSTGRES_PASSWORD=airflow
-            - POSTGRES_DB=airflow
+            - POSTGRES_USER=${AIRFLOW}
+            - POSTGRES_PASSWORD=${AIRFLOW}
+            - POSTGRES_DB=${AIRFLOW}
         logging:
             options:
                 max-size: 10m
@@ -38,7 +38,7 @@ services:
         container_name: zookeeper
         image: confluentinc/cp-zookeeper:5.3.1
         environment:
-            - ZOOKEEPER_CLIENT_PORT=2181
+            - ZOOKEEPER_CLIENT_PORT=${ZOOKEEPER_CLIENT_PORT}
         ports:
             - "2181:2181"
         volumes:
@@ -47,6 +47,10 @@ services:
     kafka:
         container_name: kafka
         build: ./kafka
+        environment: 
+            - KAFKA_CREATE_TOPICS=${KAFKA_CREATE_TOPICS}
+            - KAFKA_ZOOKEEPER_CONNECT=${ZOOKEEPER_URL}
+            - KAFKA_ADVERTISED_LISTENERS=${KAFKA_ADVERTISED_LISTENERS}
         depends_on:
             - zookeeper
         volumes:
@@ -56,9 +60,9 @@ services:
         container_name: schema-registry
         image: confluentinc/cp-schema-registry:5.3.1
         environment:
-            - SCHEMA_REGISTRY_HOST_NAME=schema-registry
-            - SCHEMA_REGISTRY_KAFKASTORE_CONNECTION_URL=zookeeper:2181
-            - SCHEMA_REGISTRY_LOG4J_ROOT_LOGLEVEL=WARN
+            - SCHEMA_REGISTRY_HOST_NAME=${SCHEMA_REGISTRY_HOST_NAME}
+            - SCHEMA_REGISTRY_KAFKASTORE_CONNECTION_URL=${ZOOKEEPER_URL}
+            - SCHEMA_REGISTRY_LOG4J_ROOT_LOGLEVEL=${SCHEMA_REGISTRY_LOGLEVEL}
         depends_on:
             - kafka  
 
@@ -74,8 +78,14 @@ services:
     connect:
         container_name: connect
         build: ./connect
+        environment:
+            - CONNECT_REST_ADVERTISED_HOST_NAME=${CONNECT_REST_ADVERTISED_HOST_NAME}
+            - CONNECT_SCHEMA_REGISTRY_URL=${SCHEMA_REGISTRY_URL}
+            - CONNECT_KEY_CONVERTER_SCHEMA_REGISTRY_URL=${SCHEMA_REGISTRY_URL}
+            - CONNECT_VALUE_CONVERTER_SCHEMA_REGISTRY_URL=${SCHEMA_REGISTRY_URL}
+            - CONNECT_BOOTSTRAP_SERVERS=${CONNECT_BOOTSTRAP_SERVERS} 
         ports:
-            - 8083:8083
+            - "8083:8083"
         depends_on:
             - kafka
             - schema-registry
@@ -95,7 +105,7 @@ services:
         container_name: mongo
         image: mongo:4.2
         ports:
-            - 27017:27017
+            - "27017:27017"
         command: ["mongod", "--replSet", "rs0", "--auth"]
         volumes:
             - ./mongo/init.sh:/usr/local/bin/init.sh
@@ -103,13 +113,23 @@ services:
     api:
         container_name: api
         build: ./api
+        command: >
+            sh -c "python manage.py makemigrations &&
+            python manage.py migrate &&
+            python manage.py runserver 0.0.0.0:5000"
         ports:
-            - 5000:5000
+            - "5000:5000"
+        environment:
+            - ELASTIC_HOST=${ELASTIC_HOST}
+            - ELASTIC_INDEX=${ELASTIC_INDEX}
+            - MONGO_HOST=${MONGO_HOST}
+            - MONGO_USR=${RSS_NEWS}
+            - MONGO_PASSWD=${RSS_NEWS}
         depends_on:
             - mongo
             - elasticsearch
         volumes:
-            - ./api/service:/service
+            - ./api/app:/app
 
 networks: 
     default:

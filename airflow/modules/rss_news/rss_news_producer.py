@@ -2,7 +2,7 @@
 import re
 from dataclasses import dataclass
 import atoma
-import langdetect
+import langid
 from parser import WebParser
 
 
@@ -44,14 +44,15 @@ class NewsFormatter:
         self.default_author = "Unknown"
 
     def format_entry(self, entry):
+        description = self.format_description(entry)
         return News(
             self.construct_id(entry.title),
             entry.title,
             entry.link,
             self.unify_date(entry.pub_date),
-            self.format_description(entry),
+            description,
             self.assign_author(entry.author),
-            self.detect_language(entry.title)
+            self.detect_language(description)
         )
 
     def construct_id(self, title):
@@ -74,6 +75,6 @@ class NewsFormatter:
         )
 
     @staticmethod
-    def detect_language(title):
-        lower_title = title.lower()
-        return langdetect.detect(lower_title)
+    def detect_language(description):
+        detected_language = langid.classify(description)
+        return detected_language[0]

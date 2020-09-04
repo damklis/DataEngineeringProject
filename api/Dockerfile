@@ -1,13 +1,9 @@
 FROM python:3
 
-ADD service/ /service
-
-WORKDIR /service
-
-RUN apt-get update -y 
+COPY requirements.txt .
 
 RUN pip install -r requirements.txt
 
-EXPOSE 5000
+ADD app/ /app
 
-CMD ["python", "app.py"]
+WORKDIR /app
