@@ -41,8 +41,8 @@ services:
             - ZOOKEEPER_CLIENT_PORT=${ZOOKEEPER_CLIENT_PORT}
         ports:
             - "2181:2181"
-        volumes:
-            - zookeeper_data:/var/lib/zookeeper/data
+        # volumes:
+        #     - zookeeper_data:/var/lib/zookeeper/data
 
     kafka:
         container_name: kafka
@@ -53,8 +53,8 @@ services:
             - KAFKA_ADVERTISED_LISTENERS=${KAFKA_ADVERTISED_LISTENERS}
         depends_on:
             - zookeeper
-        volumes:
-            - kafka_data:/kafka/data  
+        # volumes:
+        #     - kafka_data:/kafka/data  
 
     schema-registry:
         container_name: schema-registry
@@ -113,10 +113,7 @@ services:
     api:
         container_name: api
         build: ./api
-        command: >
-            sh -c "python manage.py makemigrations &&
-            python manage.py migrate &&
-            python manage.py runserver 0.0.0.0:5000"
+        restart: unless-stopped
         ports:
             - "5000:5000"
         environment:
@@ -135,7 +132,7 @@ networks:
     default:
         name: backend-net
 
-volumes:
-    zookeeper_data: {}
-    kafka_data: {}
-    redis: {}
+#volumes:
+    # zookeeper_data: {}
+    # kafka_data: {}
+    # redis: {}

@@ -41,8 +41,8 @@ http POST localhost:8083/connectors @connect/elasticsearch-sink.json
 ```
 
 - Go to localhost:8080, turn on DAG `rss_news` and trigger it.
-- Go to API page `http://localhost:5000/v1/api/` register and login.
+- Go to API page `http://localhost:5000/api/v1/` register and login.
 - And Voila! Check the latest news about your favourite team!
 
     Example:
-    http://localhost:5000/v1/api/news/juventus
+    http://localhost:5000/api/v1/news/juventus
