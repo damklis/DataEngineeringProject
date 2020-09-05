@@ -27,7 +27,7 @@ services:
             - ./airflow/modules:/usr/local/airflow/modules
         ports:
             - "8080:8080"
-        command: webserver
+        command: ["webserver"]
         healthcheck:
             test: ["CMD-SHELL", "[ -f /usr/local/airflow/airflow-webserver.pid ]"]
             interval: 30s
@@ -41,8 +41,6 @@ services:
             - ZOOKEEPER_CLIENT_PORT=${ZOOKEEPER_CLIENT_PORT}
         ports:
             - "2181:2181"
-        # volumes:
-        #     - zookeeper_data:/var/lib/zookeeper/data
 
     kafka:
         container_name: kafka
@@ -52,9 +50,7 @@ services:
             - KAFKA_ZOOKEEPER_CONNECT=${ZOOKEEPER_URL}
             - KAFKA_ADVERTISED_LISTENERS=${KAFKA_ADVERTISED_LISTENERS}
         depends_on:
-            - zookeeper
-        # volumes:
-        #     - kafka_data:/kafka/data  
+            - zookeeper  
 
     schema-registry:
         container_name: schema-registry
@@ -69,7 +65,7 @@ services:
     redis:
         container_name: redis
         image: redis:alpine
-        command: redis-server
+        command: ["redis-server"]
         ports:
             - "6379:6379"
         volumes:
@@ -109,7 +105,7 @@ services:
         command: ["mongod", "--replSet", "rs0", "--auth"]
         volumes:
             - ./mongo/init.sh:/usr/local/bin/init.sh
-    
+        
     api:
         container_name: api
         build: ./api
@@ -131,8 +127,3 @@ services:
 networks: 
     default:
         name: backend-net
-
-#volumes:
-    # zookeeper_data: {}
-    # kafka_data: {}
-    # redis: {}
