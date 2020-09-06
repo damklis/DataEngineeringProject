@@ -15,7 +15,7 @@ services:
     airflow:
         container_name: airflow
         build: ./airflow
-        restart: always
+        restart: unless-stopped
         depends_on:
             - postgres
         logging:
@@ -48,7 +48,7 @@ services:
         environment: 
             - KAFKA_CREATE_TOPICS=${KAFKA_CREATE_TOPICS}
             - KAFKA_ZOOKEEPER_CONNECT=${ZOOKEEPER_URL}
-            - KAFKA_ADVERTISED_LISTENERS=${KAFKA_ADVERTISED_LISTENERS}
+            - KAFKA_ADVERTISED_LISTENERS=${KAFKA_LISTENERS}
         depends_on:
             - zookeeper  
 
