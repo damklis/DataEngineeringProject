@@ -17,3 +17,5 @@ ENV CONNECT_VALUE_CONVERTER "io.confluent.connect.avro.AvroConverter"
 ENV CONNECT_INTERNAL_KEY_CONVERTER "org.apache.kafka.connect.json.JsonConverter"
 ENV CONNECT_INTERNAL_VALUE_CONVERTER "org.apache.kafka.connect.json.JsonConverter"
 ENV CONNECT_PLUGIN_PATH "/usr/share/java,/usr/share/confluent-hub-components"
+
+# Add Custom Configuration
