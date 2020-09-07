@@ -168,4 +168,4 @@ SWAGGER_SETTINGS = {
     },
 }
 
-LOGIN_URL="register/"
+LOGIN_URL="user/register/"
