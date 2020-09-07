@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework.authtoken',
     'rest_framework_swagger',
+    'users',
     'news'
 ]
 
@@ -168,4 +169,4 @@ SWAGGER_SETTINGS = {
     },
 }
 
-LOGIN_URL="register/"
+LOGIN_URL="user/register/"
