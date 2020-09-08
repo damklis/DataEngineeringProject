@@ -1,6 +1,8 @@
 from rest_framework import serializers
+from django_elasticsearch_dsl_drf.serializers import DocumentSerializer
 
-from .models import News
+from news.documents import NewsDocument
+from news.models import News
 
 
 class NewsSerializer(serializers.ModelSerializer):
@@ -15,3 +17,17 @@ class NewsSerializer(serializers.ModelSerializer):
             "author",
             "language"
         ]
+
+
+class NewsDocumentSerializer(DocumentSerializer):
+
+    class Meta:
+        document = NewsDocument
+        fields = (
+            'title',
+            'link',
+            'published',
+            'description',
+            'author',
+            'language'
+        )

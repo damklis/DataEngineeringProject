@@ -8,4 +8,4 @@ ADD app/ /app
 
 WORKDIR /app
 
-ENTRYPOINT [ "./run_api.sh" ]
+CMD [ "./run_api.sh" ]
