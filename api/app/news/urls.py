@@ -1,10 +1,19 @@
 from django.urls import path
-from rest_framework.authtoken import views
+from rest_framework.routers import DefaultRouter
+from django.conf.urls import url, include
 
-from news.views import NewsList, NewsDetail
+from news.views import DeleteNews, NewsDocumentView
 
+
+router = DefaultRouter()
+
+router.register(
+    r"",
+    viewset=NewsDocumentView,
+    basename="news"
+)
 
 urlpatterns = [
-    path("", NewsList.as_view(), name="news_list"),
-    path("<title>/", NewsDetail.as_view(), name="news_detail")
+    url(r"<title>/", DeleteNews.as_view(), name="news_detail"),
+    url(r"^", include(router.urls)),
 ]

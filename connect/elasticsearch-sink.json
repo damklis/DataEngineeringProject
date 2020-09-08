@@ -3,7 +3,7 @@
     "config": {
         "connector.class":"io.confluent.connect.elasticsearch.ElasticsearchSinkConnector",
         "connection.url":"http://elasticsearch:9200",
-        "type.name":"kafka-connect",
+        "type.name":"_doc",
         "topics":"unique.rss_news.rss_news",
         "key.ignore":false,
         "schema.ignore":true,
