@@ -1,13 +1,19 @@
 from django.urls import path
-from rest_framework.authtoken import views
+from rest_framework.routers import DefaultRouter
+from django.conf.urls import url, include
 
-from .views import UserCreate, NewsList, NewsDetail, SwaggerSchemaView
+from news.views import DeleteNews, NewsDocumentView
 
+
+router = DefaultRouter()
+
+router.register(
+    r"",
+    viewset=NewsDocumentView,
+    basename="news"
+)
 
 urlpatterns = [
-    path("user/register/", UserCreate.as_view(), name="register"),
-    path("user/login/", views.obtain_auth_token, name="login"),
-    path("news/", NewsList.as_view(), name="news_list"),
-    path("news/<title>/", NewsDetail.as_view(), name="news_detail"),
-    path("", SwaggerSchemaView.as_view(), name="api_docs")
+    url(r"<title>/", DeleteNews.as_view(), name="delete_news"),
+    url(r"^", include(router.urls)),
 ]

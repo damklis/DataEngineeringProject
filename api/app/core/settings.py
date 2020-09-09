@@ -40,6 +40,9 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework.authtoken',
     'rest_framework_swagger',
+    'django_elasticsearch_dsl',
+    'django_elasticsearch_dsl_drf',
+    'users',
     'news'
 ]
 
@@ -99,6 +102,12 @@ DATABASES = {
             'authSource': 'admin'
         }
     }
+}
+
+ELASTICSEARCH_DSL = {
+    'default': {
+        'hosts': f"{os.environ['ELASTIC_HOST']}:9200"
+    },
 }
 
 
