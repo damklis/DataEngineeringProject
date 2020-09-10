@@ -33,7 +33,7 @@ class NewsDocument(Document):
     link = fields.TextField()
     published = fields.TextField(
         fields={
-            "raw": fields.TextField(analyzer="keyword", fielddata=True),
+            "raw": fields.TextField(analyzer="keyword"),
         },
         fielddata=True
     )
