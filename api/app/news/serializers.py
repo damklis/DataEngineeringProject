@@ -24,10 +24,10 @@ class NewsDocumentSerializer(DocumentSerializer):
     class Meta:
         document = NewsDocument
         fields = (
-            'title',
-            'link',
-            'published',
-            'description',
-            'author',
-            'language'
+            "title",
+            "link",
+            "published",
+            "description",
+            "author",
+            "language"
         )

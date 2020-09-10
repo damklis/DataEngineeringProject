@@ -119,8 +119,8 @@ services:
             - MONGO_USR=${RSS_NEWS}
             - MONGO_PASSWD=${RSS_NEWS}
         depends_on:
-            - mongo
             - elasticsearch
+            - mongo
         volumes:
             - ./api/app:/app
 

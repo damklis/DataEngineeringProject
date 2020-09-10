@@ -2,7 +2,10 @@ from rest_framework import generics
 from rest_framework.permissions import IsAuthenticated
 from django_elasticsearch_dsl_drf.viewsets import DocumentViewSet
 from django_elasticsearch_dsl_drf.filter_backends import (
-    FilteringFilterBackend, SearchFilterBackend, FacetedSearchFilterBackend,
+    FilteringFilterBackend, 
+    SearchFilterBackend, 
+    DefaultOrderingFilterBackend,
+    OrderingFilterBackend
 )
 
 from news.documents import NewsDocument
@@ -19,6 +22,8 @@ class NewsDocumentView(DocumentViewSet):
     filter_backends = [
         SearchFilterBackend,
         FilteringFilterBackend,
+        DefaultOrderingFilterBackend,
+        OrderingFilterBackend
     ]
 
     search_fields = (
@@ -29,7 +34,14 @@ class NewsDocumentView(DocumentViewSet):
     filter_fields = {
         "language": "language"
     }
+    
+    ordering_fields = {
+        "published": "published"
+    }
 
+    ordering = (
+        "timestamp",
+    ) 
 
 
 class DeleteNews(generics.DestroyAPIView):

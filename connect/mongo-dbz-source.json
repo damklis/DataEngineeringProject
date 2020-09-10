@@ -4,7 +4,7 @@
       "connector.class":"io.debezium.connector.mongodb.MongoDbConnector",
       "tasks.max":"1",
       "mongodb.hosts":"rs0/mongo:27017",
-      "mongodb.name":"unique",
+      "mongodb.name":"news",
       "mongodb.user":"rss_news",
       "mongodb.password":"rss_news",
       "database.whitelist":"rss_news",
