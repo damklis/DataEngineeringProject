@@ -45,7 +45,7 @@ class NewsDocument(Document):
     )
     author = fields.TextField()
     language = fields.TextField()
-    timestamp = fields.IntegerField()
+    timestamp = fields.LongField()
 
     class Django:
         model = News

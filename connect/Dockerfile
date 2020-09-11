@@ -18,8 +18,8 @@ ENV CONNECT_INTERNAL_KEY_CONVERTER "org.apache.kafka.connect.json.JsonConverter"
 ENV CONNECT_INTERNAL_VALUE_CONVERTER "org.apache.kafka.connect.json.JsonConverter"
 ENV CONNECT_PLUGIN_PATH "/usr/share/java,/usr/share/confluent-hub-components"
 
-WORKDIR /etc/kafka-connect
+ADD connectors /etc/kafka-connect/connectors
 
-COPY . .
+WORKDIR /etc/kafka-connect/connectors
 
-CMD ["./run_connect_with_connectors.sh"]
+CMD ["./register_connectors.sh"]

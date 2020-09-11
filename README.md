@@ -20,24 +20,10 @@ docker-compose up -d mongo
 docker exec mongo /usr/local/bin/init.sh
 ```
 
-- Run services
+- Run other services
 
 ```sh
 docker-compose up -d
-```
-
-- Post Kafka Connectors
-
-```sh
-http POST localhost:8083/connectors @connect/mongo-sink.json
-```
-
-```sh
-http POST localhost:8083/connectors @connect/mongo-dbz-source.json
-```
-
-```sh
-http POST localhost:8083/connectors @connect/elasticsearch-sink.json
 ```
 
 - Go to localhost:8080, turn on DAG `rss_news` and trigger it.
@@ -45,4 +31,4 @@ http POST localhost:8083/connectors @connect/elasticsearch-sink.json
 - And Voila! Check the latest news about your favourite team!
 
     Example:
-    http://localhost:5000/api/v1/news/juventus
+    http://localhost:5000/api/v1/news/?search=juventus
