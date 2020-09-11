@@ -32,18 +32,18 @@ Each endpoint displays News information:
 ```
 http://0.0.0.0:5000/api/v1/news/ 
 ```
--  add `search_fields` title and description, see all of the articles containing the `Robert Lewandowski` value
+-  add `search_fields` title and description, see all of the news containing the `Robert Lewandowski` value
 ```
 http://0.0.0.0:5000/api/v1/news/?search=Robert%20Lewandowski 
 ```
 
-- find articles containing the `Lewandowski` value in their titles
+- find news containing the `Lewandowski` value in their titles
 
 ```
 http://0.0.0.0:5000/api/v1/news/?search=title|Lewandowski 
 ```
 
-- see all of the polish articles containing the `Robert Lewandowski` 
+- see all of the polish news containing the `Lewandowski` 
 
 ```
 http://0.0.0.0:5000/api/v1/news/?search=lewandowski&language=pl
