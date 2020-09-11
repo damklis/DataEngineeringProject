@@ -1,4 +1,4 @@
-# Login
+# Register
 
 Used to register a new User.
 
