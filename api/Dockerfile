@@ -7,3 +7,5 @@ RUN pip install -r requirements.txt
 ADD app/ /app
 
 WORKDIR /app
+
+CMD [ "./run_api.sh" ]

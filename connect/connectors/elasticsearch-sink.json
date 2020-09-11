@@ -3,18 +3,20 @@
     "config": {
         "connector.class":"io.confluent.connect.elasticsearch.ElasticsearchSinkConnector",
         "connection.url":"http://elasticsearch:9200",
-        "type.name":"kafka-connect",
-        "topics":"unique.rss_news.rss_news",
+        "type.name":"_doc",
+        "topics":"news.rss_news.rss_news",
         "key.ignore":false,
         "schema.ignore":true,
         "key.converter": "org.apache.kafka.connect.json.JsonConverter",
         "key.converter.schemas.enable":false,
         "value.converter":"org.apache.kafka.connect.json.JsonConverter",
         "value.converter.schemas.enable": false,
-        "transforms":"InsertKey,extractKey",
+        "transforms":"InsertKey,ExtractKey,InsertTimestamp",
         "transforms.InsertKey.type":"org.apache.kafka.connect.transforms.ValueToKey",
         "transforms.InsertKey.fields":"id",
-        "transforms.extractKey.type":"org.apache.kafka.connect.transforms.ExtractField$Key",
-        "transforms.extractKey.field":"id"
+        "transforms.ExtractKey.type":"org.apache.kafka.connect.transforms.ExtractField$Key",
+        "transforms.ExtractKey.field":"id",
+        "transforms.InsertTimestamp.type": "org.apache.kafka.connect.transforms.InsertField$Value",
+        "transforms.InsertTimestamp.timestamp.field": "timestamp"
     }
 }

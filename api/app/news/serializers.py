@@ -1,8 +1,8 @@
 from rest_framework import serializers
-from django.contrib.auth.models import User
-from rest_framework.authtoken.models import Token
+from django_elasticsearch_dsl_drf.serializers import DocumentSerializer
 
-from .models import News
+from news.documents import NewsDocument
+from news.models import News
 
 
 class NewsSerializer(serializers.ModelSerializer):
@@ -19,26 +19,15 @@ class NewsSerializer(serializers.ModelSerializer):
         ]
 
 
-class UserSerializer(serializers.ModelSerializer):
+class NewsDocumentSerializer(DocumentSerializer):
 
     class Meta:
-        model = User
-        fields = ('username', 'email', 'password')
-        extra_kwargs = {
-            'password': {
-                'write_only': True,
-                'min_length': 5
-                }
-            }
-
-    def create(self, validated_data):
-        user = User(
-            email=validated_data['email'],
-            username=validated_data['username']
+        document = NewsDocument
+        fields = (
+            "title",
+            "link",
+            "published",
+            "description",
+            "author",
+            "language"
         )
-        user.set_password(validated_data['password'])
-        user.save()
-        
-        Token.objects.create(user=user)
-        
-        return user
