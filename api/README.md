@@ -9,7 +9,7 @@ Easily search for the latest news!
 
 Open endpoints require no Authentication.
 
-* [Swagger Documentation](login.md) : `GET /api/v1/`
+* [Swagger Documentation](https://swagger.io/) : `GET /api/v1/`
 * [User Register](docs/user-register.md) : `POST /api/v1/user/register/`
 * [User Login](docs/user-login.md) : `POST /api/v1/user/login/`
 
