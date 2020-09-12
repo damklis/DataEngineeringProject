@@ -1,9 +1,10 @@
 # NEWS API
 
-This API project is written in [Django Rest Framework](https://github.com/tomchristie/django-rest-framework).
+This API project is written using [Django Rest Framework](https://github.com/tomchristie/django-rest-framework).
+
 MongoDB is the main database. Additionally, Elasticsearch serves as a query search engine.
 
-Easily search for the latest news!
+Goal? Easily search for the latest news!
 
 ## Open Endpoints
 
@@ -32,18 +33,18 @@ Each endpoint displays News information:
 ```
 http://0.0.0.0:5000/api/v1/news/ 
 ```
--  add `search_fields` title and description, see all of the news containing the `Robert Lewandowski` value
+-  add `search_fields` title and description, see all of the news containing the `Robert Lewandowski` phrase
 ```
 http://0.0.0.0:5000/api/v1/news/?search=Robert%20Lewandowski 
 ```
 
-- find news containing the `Lewandowski` value in their titles
+- find news containing the `Lewandowski` phrase in their titles
 
 ```
 http://0.0.0.0:5000/api/v1/news/?search=title|Lewandowski 
 ```
 
-- see all of the polish news containing the `Lewandowski` 
+- see all of the polish news containing the `Lewandowski` phrase
 
 ```
 http://0.0.0.0:5000/api/v1/news/?search=lewandowski&language=pl
