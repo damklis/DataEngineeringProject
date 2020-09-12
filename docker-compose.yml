@@ -16,8 +16,6 @@ services:
         container_name: airflow
         build: ./airflow
         restart: unless-stopped
-        depends_on:
-            - postgres
         logging:
             options:
                 max-size: 10m
@@ -33,6 +31,9 @@ services:
             interval: 30s
             timeout: 30s
             retries: 3
+        depends_on:
+            - postgres
+            - redis
 
     zookeeper:
         container_name: zookeeper
