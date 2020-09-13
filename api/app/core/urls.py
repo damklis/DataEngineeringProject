@@ -19,11 +19,14 @@ from django.urls import path, include
 from django.conf.urls import url
 from rest_framework_swagger.views import get_swagger_view
 
+from news.admin import admin_site
+
+
 swagger_docs_view = get_swagger_view(title='News API DOCS')
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path('admin/', admin_site.urls),
     path('api/v1/', swagger_docs_view),
-    path('api/v1/news/', include('news.urls')),
+    path('api/v1/news/', include('search.urls')),
     path('api/v1/user/', include('users.urls')),
 ]

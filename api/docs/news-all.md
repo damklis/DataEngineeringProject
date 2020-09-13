@@ -24,7 +24,7 @@ The authenticated user can access all recent news.
 ```json
 {
     "count": 2,
-    "next": "http://localhost:5000/api/v1/news/",
+    "next": null,
     "previous": null,
     "facets": {},
     "results": [

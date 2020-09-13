@@ -1,54 +1,24 @@
 from rest_framework import generics
-from rest_framework.permissions import IsAuthenticated
-from django_elasticsearch_dsl_drf.viewsets import DocumentViewSet
-from django_elasticsearch_dsl_drf.filter_backends import (
-    FilteringFilterBackend, 
-    SearchFilterBackend, 
-    DefaultOrderingFilterBackend,
-    OrderingFilterBackend
-)
+from rest_framework.permissions import IsAdminUser
 
-from news.documents import NewsDocument
-from news.serializers import NewsDocumentSerializer
 from news.models import News
 from news.serializers import NewsSerializer
-from core.permissions import IsStaffOrReadOnly
 
 
-class NewsDocumentView(DocumentViewSet):
-    document = NewsDocument
-    serializer_class = NewsDocumentSerializer
-    lookup_field = "id"
-    filter_backends = [
-        SearchFilterBackend,
-        FilteringFilterBackend,
-        DefaultOrderingFilterBackend,
-        OrderingFilterBackend
-    ]
+class AdminNewsList(generics.ListCreateAPIView):
+    queryset = News.objects.all()
+    serializer_class = NewsSerializer
 
-    search_fields = (
-        "title",
-        "description"
+    permission_classes = (
+        IsAdminUser,
     )
 
-    filter_fields = {
-        "language": "language"
-    }
-    
-    ordering_fields = {
-        "published": "published"
-    }
 
-    ordering = (
-        "timestamp",
-    ) 
-
-
-class DeleteNews(generics.DestroyAPIView):
+class AdminNewsDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = News.objects.all()
     serializer_class = NewsSerializer
     lookup_field = "title"
 
     permission_classes = (
-        IsStaffOrReadOnly, IsAuthenticated
+        IsAdminUser,
     )
