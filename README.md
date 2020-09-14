@@ -1,5 +1,5 @@
-# DataEngineerWannabeProject
-[![Build Status](https://travis-ci.org/damklis/DataEngineerWannabeProject.svg?branch=master)](https://travis-ci.org//damklis/DataEngineerWannabeProject)
+# DataEngineeringProject
+[![Build Status](https://travis-ci.org/damklis/DataEngineeringProject.svg?branch=master)](https://travis-ci.org//damklis/DataEngineeringProject)
 
 MVP - work in progress.
 
