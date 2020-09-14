@@ -49,3 +49,14 @@ http://0.0.0.0:5000/api/v1/news/?search=title|Lewandowski
 ```
 http://0.0.0.0:5000/api/v1/news/?search=lewandowski&language=pl
 ```
+
+## Endpoints for Admin User
+
+Admin endpoints require an admin account and a valid Token included in the header of the
+request. A Token can be acquired from the `User Login` view above.
+
+### News related
+
+Endpoints for News administration (MongoDB):
+
+* [Admin news](docs/admin-news.md) : `GET/POST/DELETE/PATCH/PUT /admin/api/news/`

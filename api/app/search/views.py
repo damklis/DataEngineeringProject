@@ -31,9 +31,10 @@ class NewsDocumentView(DocumentViewSet):
     }
     
     ordering_fields = {
-        "published": "published"
+        "published": "published",
+        "author": "author"
     }
 
     ordering = (
-        "timestamp",
+        "published",
     )

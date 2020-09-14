@@ -11,12 +11,10 @@
         "key.converter.schemas.enable":false,
         "value.converter":"org.apache.kafka.connect.json.JsonConverter",
         "value.converter.schemas.enable": false,
-        "transforms":"InsertKey,ExtractKey,InsertTimestamp",
+        "transforms":"InsertKey,ExtractKey",
         "transforms.InsertKey.type":"org.apache.kafka.connect.transforms.ValueToKey",
         "transforms.InsertKey.fields":"id",
         "transforms.ExtractKey.type":"org.apache.kafka.connect.transforms.ExtractField$Key",
-        "transforms.ExtractKey.field":"id",
-        "transforms.InsertTimestamp.type": "org.apache.kafka.connect.transforms.InsertField$Value",
-        "transforms.InsertTimestamp.timestamp.field": "timestamp"
+        "transforms.ExtractKey.field":"id"
     }
 }

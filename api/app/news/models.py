@@ -12,6 +12,7 @@ class News(models.Model):
 
     class Meta:
         db_table = "rss_news"
+        verbose_name_plural = "news"
 
     def __str__(self):
         return self.link
