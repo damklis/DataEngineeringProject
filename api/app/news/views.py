@@ -10,6 +10,6 @@ class AdminNewsViewSet(viewsets.ModelViewSet):
     serializer_class = NewsSerializer
     lookup_field = "_id"
     
-    permission_classes = (
-        IsAdminUser,
-    )
+    # permission_classes = (
+    #     IsAdminUser,
+    # )

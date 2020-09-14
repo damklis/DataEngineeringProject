@@ -46,7 +46,9 @@ class NewsDocument(Document):
     author = fields.TextField(
         fielddata=True
     )
-    language = fields.TextField()
+    language = fields.TextField(
+        fielddata=True
+    )
 
     class Django:
         model = News

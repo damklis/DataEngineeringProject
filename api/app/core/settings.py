@@ -178,4 +178,6 @@ SWAGGER_SETTINGS = {
     },
 }
 
-LOGIN_URL="user/register/"
+LOGIN_URL='user/register/'
+
+AUTH_USER_MODEL = 'users.UserModel'

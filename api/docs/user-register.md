@@ -12,8 +12,7 @@ Used to register a new User.
 
 ```json
 {
-    "username": "[valid username]",
-    "email": "[valid email address]",
+    "username": "[valid email address]",
     "password": "[password in plain text]"
 }
 ```
@@ -22,8 +21,7 @@ Used to register a new User.
 
 ```json
 {
-    "username": "exampleuser",
-    "email": "exampleuser@example.com",
+    "username": "exampleuser@example.com",
     "password": "abcd1234"
 }
 ```
@@ -36,8 +34,7 @@ Used to register a new User.
 
 ```json
 {
-    "username": "exampleuser",
-    "email": "exampleuser@example.com"
+    "username": "exampleuser@example.com"
 }
 ```
 

@@ -1,12 +1,11 @@
 from django.urls import include, path
 from rest_framework import routers
 from django.contrib import admin
-from django.contrib.auth.models import User
 from rest_framework.authtoken.models import Token
 
 from news.models import News
 from news.views import AdminNewsViewSet
-
+from users.models import UserModel
 
 router = routers.DefaultRouter()
 router.register(r"news", AdminNewsViewSet)
@@ -23,6 +22,6 @@ class MyAdminSite(admin.AdminSite):
 
 admin_site = MyAdminSite()
 
-admin_site.register(User)
+admin_site.register(UserModel)
 admin_site.register(Token)
 admin_site.register(News)
