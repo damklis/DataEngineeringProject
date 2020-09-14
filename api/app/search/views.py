@@ -1,5 +1,4 @@
 from django_elasticsearch_dsl_drf.viewsets import DocumentViewSet
-from django_elasticsearch_dsl_drf.constants import SUGGESTER_COMPLETION
 from django_elasticsearch_dsl_drf.filter_backends import (
     FilteringFilterBackend, 
     SearchFilterBackend, 
