@@ -104,10 +104,13 @@ services:
         container_name: mongo
         image: mongo:4.2
         command: ["mongod", "--replSet", "rs0", "--auth"]
+        environment: 
+            - MONGO_ADMIN=${MONGO_ADMIN}
+            - RSS_NEWS_USER=${RSS_NEWS}
         ports:
             - "27017:27017"
         volumes:
-            - ./mongo/init.sh:/usr/local/bin/init.sh
+            - ./mongo/init.sh:/docker-entrypoint-initdb.d/init.sh
         
     api:
         container_name: api

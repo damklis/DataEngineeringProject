@@ -9,6 +9,8 @@ while [ $(curl -s -o /dev/null -w %{http_code} http://$ELASTIC_HOST:9200) -ne 20
   echo -e $(date) " Elasticsearch HTTP state: " $(curl -s -o /dev/null -w %{http_code} http://$ELASTIC_HOST:9200) " (waiting for 200)"
   sleep 5 
 done
-echo -e $(date) "Elasticsearch is ready!"
+echo -e $(date) "Elasticsearch is ready! HTTP state: " $(curl -s -o /dev/null -w %{http_code} http://$ELASTIC_HOST:9200)
+
+echo -e "Creating Django-Elastic index"
 python manage.py search_index --create &
 python manage.py runserver 0.0.0.0:5000 
