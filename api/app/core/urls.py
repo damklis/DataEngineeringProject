@@ -19,7 +19,7 @@ from django.urls import path, include
 from django.conf.urls import url
 from rest_framework_swagger.views import get_swagger_view
 
-from news.admin import admin_site
+from users.admin import admin_site
 
 
 swagger_docs_view = get_swagger_view(title='News API DOCS')

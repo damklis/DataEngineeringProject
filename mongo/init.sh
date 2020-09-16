@@ -47,6 +47,7 @@ mongo -u ${MONGO_ADMIN} -p ${MONGO_ADMIN} localhost:27017/${MONGO_ADMIN} <<-EOF
         pwd: "${RSS_NEWS_USER}",
         roles: [
             { role: "readWrite", db: "${RSS_NEWS_USER}" },
+            { role: "readWrite", db: "test_${RSS_NEWS_USER}" },
             { role: "read", db: "local" },
             { role: "listDatabases", db: "${MONGO_ADMIN}" },
             { role: "read", db: "config" },
