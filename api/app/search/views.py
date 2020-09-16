@@ -1,7 +1,7 @@
 from django_elasticsearch_dsl_drf.viewsets import DocumentViewSet
 from django_elasticsearch_dsl_drf.filter_backends import (
     FilteringFilterBackend, 
-    SearchFilterBackend, 
+    CompoundSearchFilterBackend, 
     DefaultOrderingFilterBackend,
     OrderingFilterBackend
 )
@@ -15,7 +15,7 @@ class NewsDocumentView(DocumentViewSet):
     serializer_class = NewsDocumentSerializer
     lookup_field = "id"
     filter_backends = [
-        SearchFilterBackend,
+        CompoundSearchFilterBackend,
         FilteringFilterBackend,
         DefaultOrderingFilterBackend,
         OrderingFilterBackend

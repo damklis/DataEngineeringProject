@@ -6,10 +6,11 @@ from rest_framework.test import APIClient
 from rest_framework import status
 
 
-class UserApiTests(TestCase):
+CREATE_USER_URL = reverse("user:register")
+GET_TOKEN_URL = reverse("user:login")
 
-    CREATE_USER_URL = reverse("user:register")
-    GET_TOKEN_URL = reverse("user:login")
+
+class UserApiTests(TestCase):
 
     def setUp(self):
         self.client = APIClient()
@@ -25,7 +26,7 @@ class UserApiTests(TestCase):
             "email": "test_user_3@test.com",
             "password": "test123"
         }
-        response = self.client.post(self.CREATE_USER_URL, attrs)
+        response = self.client.post(CREATE_USER_URL, attrs)
 
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
         user = get_user_model().objects.get(**response.data)
@@ -37,7 +38,7 @@ class UserApiTests(TestCase):
             "email": "test_user_4@test.com",
             "password": "123"
         }
-        response = self.client.post(self.CREATE_USER_URL, attrs)
+        response = self.client.post(CREATE_USER_URL, attrs)
         self.assertEqual(
             response.status_code, status.HTTP_400_BAD_REQUEST
         )
@@ -49,7 +50,7 @@ class UserApiTests(TestCase):
         }
         self.create_user(**attrs)
 
-        response = self.client.post(self.CREATE_USER_URL, attrs)
+        response = self.client.post(CREATE_USER_URL, attrs)
         self.assertEqual(
             response.status_code, status.HTTP_400_BAD_REQUEST
         )
@@ -60,7 +61,7 @@ class UserApiTests(TestCase):
             "password": "123"
         }
         self.create_user(**attrs)
-        response = self.client.post(self.GET_TOKEN_URL, attrs)
+        response = self.client.post(GET_TOKEN_URL, attrs)
         self.assertIn("token", response.data)
         self.assertEqual(
             response.status_code, status.HTTP_200_OK
@@ -72,7 +73,7 @@ class UserApiTests(TestCase):
             "password": "12345"
         }
         self.create_user(email="test_user_6@test.com", password="wrong")
-        response = self.client.post(self.GET_TOKEN_URL, attrs)
+        response = self.client.post(GET_TOKEN_URL, attrs)
         self.assertNotIn("token", response.data)
         self.assertEqual(
             response.status_code, status.HTTP_400_BAD_REQUEST
@@ -83,7 +84,7 @@ class UserApiTests(TestCase):
             "email": "test_user_7@test.com",
             "password": "12345"
         }
-        response = self.client.post(self.GET_TOKEN_URL, attrs)
+        response = self.client.post(GET_TOKEN_URL, attrs)
         self.assertNotIn("token", response.data)
         self.assertEqual(
             response.status_code, status.HTTP_400_BAD_REQUEST
