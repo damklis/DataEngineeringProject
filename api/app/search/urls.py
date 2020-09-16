@@ -8,7 +8,7 @@ app_name = "search"
 
 router = DefaultRouter()
 
-router.register(r"", viewset=NewsDocumentView, basename="news")
+router.register(r"", viewset=NewsDocumentView, basename="search")
 
 urlpatterns = [
     path("", include(router.urls)),

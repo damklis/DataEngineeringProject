@@ -3,9 +3,8 @@ from django.contrib import admin
 from rest_framework.authtoken.models import Token
 
 from news.models import News
-from users.models import UserModel
 from news.urls import urlpatterns
-
+from users.models import UserModel
 
 class NewsAdminSite(admin.AdminSite):
     

@@ -7,9 +7,9 @@ from rest_framework import status
 from rest_framework.test import APIClient
 
 
-SEARCH_NEWS_URL = reverse("search:news-list")
+SEARCH_NEWS_URL = reverse("search:search-list")
 SEARCH_DETAIL_NEWS_URL = reverse(
-    "search:news-detail", kwargs={"id":"missing_news"}
+    "search:search-detail", kwargs={"id":"missing_news"}
 )
 
 

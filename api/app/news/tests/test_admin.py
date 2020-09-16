@@ -1,7 +1,7 @@
 from django.test import TestCase
 from django.urls.resolvers import URLResolver
 
-from users.admin import NewsAdminSite
+from news.admin import NewsAdminSite
 
 
 class TestAdminSite(TestCase):
