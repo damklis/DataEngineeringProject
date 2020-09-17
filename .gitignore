@@ -8,3 +8,4 @@ __pycache__
 
 ## Django
 *.sqlite3
+migrations/

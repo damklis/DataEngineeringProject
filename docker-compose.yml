@@ -16,8 +16,6 @@ services:
         container_name: airflow
         build: ./airflow
         restart: unless-stopped
-        depends_on:
-            - postgres
         logging:
             options:
                 max-size: 10m
@@ -33,6 +31,9 @@ services:
             interval: 30s
             timeout: 30s
             retries: 3
+        depends_on:
+            - postgres
+            - redis
 
     zookeeper:
         container_name: zookeeper
@@ -97,16 +98,19 @@ services:
                 soft: -1
                 hard: -1
         ports:
-            - 9200:9200
+            - "9200:9200"
 
     mongo:
         container_name: mongo
         image: mongo:4.2
         command: ["mongod", "--replSet", "rs0", "--auth"]
+        environment: 
+            - MONGO_ADMIN=${MONGO_ADMIN}
+            - RSS_NEWS_USER=${RSS_NEWS}
         ports:
             - "27017:27017"
         volumes:
-            - ./mongo/init.sh:/usr/local/bin/init.sh
+            - ./mongo/init.sh:/docker-entrypoint-initdb.d/init.sh
         
     api:
         container_name: api

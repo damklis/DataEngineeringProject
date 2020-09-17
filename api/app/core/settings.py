@@ -43,7 +43,8 @@ INSTALLED_APPS = [
     'django_elasticsearch_dsl',
     'django_elasticsearch_dsl_drf',
     'users',
-    'news'
+    'news',
+    'search'
 ]
 
 MIDDLEWARE = [
@@ -177,4 +178,6 @@ SWAGGER_SETTINGS = {
     },
 }
 
-LOGIN_URL="user/register/"
+LOGIN_URL='user/register/'
+
+AUTH_USER_MODEL = 'users.UserModel'

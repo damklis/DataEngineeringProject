@@ -1,19 +1,12 @@
-from django.urls import path
-from rest_framework.routers import DefaultRouter
-from django.conf.urls import url, include
+from django.urls import include, path
+from rest_framework import routers
 
-from news.views import DeleteNews, NewsDocumentView
+from news.views import AdminNewsViewSet
 
 
-router = DefaultRouter()
-
-router.register(
-    r"",
-    viewset=NewsDocumentView,
-    basename="news"
-)
+router = routers.DefaultRouter()
+router.register(r"news", AdminNewsViewSet)
 
 urlpatterns = [
-    url(r"<title>/", DeleteNews.as_view(), name="delete_news"),
-    url(r"^", include(router.urls)),
+    path("api/", include(router.urls), name="news")
 ]

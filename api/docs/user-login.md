@@ -12,7 +12,7 @@ Used to collect a Token for a registered User.
 
 ```json
 {
-    "username": "[valid username]",
+    "username": "[valid email]",
     "password": "[password in plain text]"
 }
 ```
@@ -21,7 +21,7 @@ Used to collect a Token for a registered User.
 
 ```json
 {
-    "username": "exampleuser",
+    "username": "exampleuser@example.com",
     "password": "abcd1234"
 }
 ```

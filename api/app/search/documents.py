@@ -43,9 +43,12 @@ class NewsDocument(Document):
             "raw": fields.TextField(analyzer="keyword"),
         }
     )
-    author = fields.TextField()
-    language = fields.TextField()
-    timestamp = fields.LongField()
+    author = fields.TextField(
+        fielddata=True
+    )
+    language = fields.TextField(
+        fielddata=True
+    )
 
     class Django:
         model = News
