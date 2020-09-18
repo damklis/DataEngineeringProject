@@ -1,26 +1,14 @@
 # DataEngineeringProject
 [![Build Status](https://travis-ci.org/damklis/DataEngineeringProject.svg?branch=master)](https://travis-ci.org//damklis/DataEngineeringProject)
 
-MVP - work in progress.
-
-Check `develop` branch.
+## Architecture
 
 
 ![MVP Architecture](./images/mvp_architecture.png)
 
 ## Project setup
 
-- Run & Init Mongo replica set
-
-```sh
-docker-compose up -d mongo
-```
-
-```sh
-docker exec mongo /usr/local/bin/init.sh
-```
-
-- Run other services
+- Run whole infrastructure
 
 ```sh
 docker-compose up -d
