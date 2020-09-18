@@ -86,8 +86,7 @@ services:
         depends_on:
             - kafka
             - schema-registry
-            - elasticsearch
-            - mongo
+            - api
 
     elasticsearch:
         container_name: elasticsearch
@@ -125,8 +124,8 @@ services:
         ports:
             - "5000:5000"
         depends_on:
-            - elasticsearch
             - mongo
+            - elasticsearch
         volumes:
             - ./api/app:/app
 
