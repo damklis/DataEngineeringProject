@@ -47,7 +47,7 @@ services:
         container_name: kafka
         build: ./kafka
         environment: 
-            - KAFKA_CREATE_TOPICS=${KAFKA_CREATE_TOPICS}
+            - DEFAULT_TOPIC=${DEFAULT_TOPIC}
             - KAFKA_ZOOKEEPER_CONNECT=${ZOOKEEPER_URL}
             - KAFKA_ADVERTISED_LISTENERS=${KAFKA_LISTENERS}
         depends_on:
@@ -109,7 +109,7 @@ services:
         ports:
             - "27017:27017"
         volumes:
-            - ./mongo/init.sh:/docker-entrypoint-initdb.d/init.sh
+            - ./mongo/init.sh:/usr/local/bin/init.sh
         
     api:
         container_name: api
