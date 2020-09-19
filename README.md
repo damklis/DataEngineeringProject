@@ -8,10 +8,10 @@
 
 ## Project setup
 
-- Run whole infrastructure
+- Run infrastructure
 
 ```sh
-docker-compose up -d
+./manage.sh up
 ```
 
 - Go to localhost:8080, turn on DAG `rss_news` and trigger it.
