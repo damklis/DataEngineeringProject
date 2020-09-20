@@ -1,6 +1,5 @@
 #!/bin/sh
 
-
 /etc/confluent/docker/run &
 echo -e "Waiting for Kafka Connect to start listening on localhost"
 while [ $(curl -s -o /dev/null -w %{http_code} http://localhost:8083/connectors) -ne 200 ] ; do 
