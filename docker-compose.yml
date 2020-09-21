@@ -22,7 +22,7 @@ services:
                 max-file: "3"
         command: ["webserver"]
         ports:
-            - "8080:8080"
+            - 8080:8080
         volumes:
             - ./airflow/dags:/usr/local/airflow/dags
             - ./airflow/modules:/usr/local/airflow/modules
@@ -40,7 +40,7 @@ services:
         environment:
             - ZOOKEEPER_CLIENT_PORT=${ZOOKEEPER_CLIENT_PORT}
         ports:
-            - "2181:2181"
+            - 2181:2181
 
     kafka:
         container_name: kafka
@@ -67,7 +67,7 @@ services:
         image: redis:alpine
         command: ["redis-server"]
         ports:
-            - "6379:6379"
+            - 6379:6379
         volumes:
             - ./redis:/usr/local/etc/redis
 
@@ -81,7 +81,7 @@ services:
             - CONNECT_VALUE_CONVERTER_SCHEMA_REGISTRY_URL=${SCHEMA_REGISTRY_URL}
             - CONNECT_BOOTSTRAP_SERVERS=${CONNECT_BOOTSTRAP_SERVERS} 
         ports:
-            - "8083:8083"
+            - 8083:8083
         depends_on:
             - kafka
             - schema-registry
@@ -96,7 +96,7 @@ services:
                 soft: -1
                 hard: -1
         ports:
-            - "9200:9200"
+            - 9200:9200
 
     mongo:
         container_name: mongo
@@ -106,7 +106,7 @@ services:
             - MONGO_ADMIN=${MONGO_ADMIN}
             - RSS_NEWS_USER=${RSS_NEWS}
         ports:
-            - "27017:27017"
+            - 27017:27017
         volumes:
             - ./mongo/init.sh:/usr/local/bin/init.sh
         
@@ -121,7 +121,7 @@ services:
             - MONGO_USR=${RSS_NEWS}
             - MONGO_PASSWD=${RSS_NEWS}
         ports:
-            - "5000:5000"
+            - 5000:5000
         depends_on:
             - mongo
             - elasticsearch
