@@ -33,7 +33,6 @@ services:
             retries: 3
         depends_on:
             - postgres
-            - redis
 
     zookeeper:
         container_name: zookeeper
