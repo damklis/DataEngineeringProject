@@ -8,4 +8,6 @@ ADD app/ /app
 
 WORKDIR /app
 
+RUN chmod +x ./run_api.sh
+
 CMD [ "./run_api.sh" ]

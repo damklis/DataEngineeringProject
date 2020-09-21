@@ -1,24 +1,9 @@
 #!/bin/sh
 
-tries=30
-while true; do
-	sleep 1
-	if mongo --host localhost --port 27017 --eval "quit(0)" &> /dev/null; then
-        break
-	fi
-	(( tries-- ))
-	if [ "$tries" -le 0 ]; then
-		echo >&2
-		kill -STOP 1
-		exit 1
-	fi
-done
-
-
 mongo localhost:27017/${RSS_NEWS_USER} <<-EOF
     rs.initiate({
         _id: "rs0",
-        members: [ { _id: 0, host: "localhost:27017" } ]
+        members: [ { _id: 0, host: getHostName() + ":27017" } ]
     });
 EOF
 echo "Initiated replica set"
