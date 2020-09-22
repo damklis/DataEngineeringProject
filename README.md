@@ -4,7 +4,7 @@
 ## Architecture
 
 
-![MVP Architecture](./images/mvp_architecture.png)
+![MVP Architecture](./images/architecture_diagram.png)
 
 ## Project setup
 
