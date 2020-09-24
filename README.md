@@ -45,7 +45,7 @@ Airflow DAG is responsible for the execution of Python scraping modules.
 - Kafka Connect **Elasticsearch Sink** consumes data from **Kafka topic B** and stores news in Elasticsearch. Data replication between topics **A** and **B** ensures MongoDB and ElasticSearch Synchronization.
 
 #### Data access
-Data gathered by previous steps can be easily accessed using [API](api) endpoints.
+- Data gathered by previous steps can be easily accessed using [API](api) endpoints.
 
 <!-- PREREQUISITES -->
 ## Prerequisites
