@@ -1,4 +1,4 @@
-# Data Engineering Project
+# Data Engineering Project 
 [![Build Status](https://travis-ci.org/damklis/DataEngineeringProject.svg?branch=master)](https://travis-ci.org//damklis/DataEngineeringProject)
 
 
@@ -34,10 +34,18 @@ The pipeline infrastructure is built using popular, open-source projects.
 ## How it works
 
 #### Data Scraping
+Airflow DAG is responsible for the execution of Python scraping modules.
+- First task updates **proxypool**. Using proxies in combination with rotating user agents can help get scrapers past most of the anti-scraping measures and prevent being detected as a scraper.
+
+- Second task extracts news from RSS feeds provided in the configuration file, validates the quality and sends data into **Kafka topic A**. The extraction process is using proxies from **proxypool**.
 
 #### Data flow
+- Kafka Connect **Mongo Sink** consumes data from **Kafka topic A** and stores news in MongoDB.
+- **Debezium MongoDB Source** tracks a MongoDB replica set for document changes in databases and collections, recording those changes as events in **Kafka topic B**.
+- Kafka Connect **Elasticsearch Sink** consumes data from **Kafka topic B** and stores news in Elasticsearch. Data replication between topics **A** and **B** ensures MongoDB and ElasticSearch Synchronization.
 
 #### Data access
+Data gathered by previous steps can be easily accessed using [API](api) endpoints.
 
 <!-- PREREQUISITES -->
 ## Prerequisites
@@ -72,7 +80,7 @@ Script `manage.sh` - wrapper for `docker-compose` works as a managing tool.
 
 <!-- API -->
 ## API
-See detailed documentation in [API](api/docs) module.
+See detailed documentation in [API](api) module.
 
 Example searches:
 - see all news
@@ -130,4 +138,5 @@ Distributed under the MIT License. See [LICENSE](LICENSE) for more information.
 
 <!-- CONTACT -->
 ## Contact
+If you have any questions or suggestions please feel free to contact me.
 Damian Kliś [@DamianKlis](https://twitter.com/DamianKlis)
