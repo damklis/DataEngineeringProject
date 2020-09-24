@@ -1,5 +1,5 @@
 # Data Engineering Project 
-[![Build Status](https://travis-ci.org/damklis/DataEngineeringProject.svg?branch=master)](https://travis-ci.org//damklis/DataEngineeringProject) [![Coverage Status](https://coveralls.io/repos/github/damklis/DataEngineeringProject/badge.svg)](https://coveralls.io/github/damklis/DataEngineeringProject)
+[![Build Status](https://travis-ci.org/damklis/DataEngineeringProject.svg?branch=master)](https://travis-ci.org//damklis/DataEngineeringProject) [![Coverage Status](https://coveralls.io/repos/github/damklis/DataEngineeringProject/badge.svg?branch=master)](https://coveralls.io/github/damklis/DataEngineeringProject?branch=master)
 
 
 **Data Engineering Project** is an implementation of the data pipeline which consumes the latest news from RSS Feeds and makes them available for users via handy API.
