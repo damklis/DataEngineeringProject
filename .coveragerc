@@ -1,0 +1,13 @@
+[run]
+omit =
+    *test*.py
+    *main.py
+
+[report]
+exclude_lines =
+    pragma: no cover
+    def __repr__
+    def __enter__
+    def __exit__
+    raise NotImplementedError
+    if __name__ == .__main__.:

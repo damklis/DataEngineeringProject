@@ -33,7 +33,8 @@ dag = DAG(
     description="scrape rss feeds and export events to broker using proxypool",
     schedule_interval="*/10 * * * *",
     start_date=datetime(2020, 1, 1),
-    catchup=False
+    catchup=False,
+    is_paused_upon_creation=False
 )
 
 proxypool = PythonOperator(

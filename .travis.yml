@@ -6,7 +6,10 @@ services:
     - docker
 
 before_script: 
-    - pip install docker-compose flake8
+    - pip install docker-compose
 
 script:
     - bash ./run_tests.sh
+
+after_success:
+    - coveralls
