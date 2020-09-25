@@ -5,7 +5,7 @@
 **Data Engineering Project** is an implementation of the data pipeline which consumes the latest news from RSS Feeds and makes them available for users via handy API.
 The pipeline infrastructure is built using popular, open-source projects.
 
-**Access latest news and headlines in one place.** :muscle:
+**Access the latest news and headlines in one place.** :muscle:
 
 <!-- TABLE OF CONTENTS -->
 ## Table of Contents
@@ -17,8 +17,8 @@ The pipeline infrastructure is built using popular, open-source projects.
     * [Data access](#data-access)
 * [Prerequisites](#prerequisites)
 * [Running project](#running-project)
-* [API](#api)
 * [Testing](#testing)
+* [API service](#api-service)
 * [References](#references)
 * [Contributions](#contributions)
 * [License](#license)
@@ -35,28 +35,25 @@ The pipeline infrastructure is built using popular, open-source projects.
 
 #### Data Scraping
 Airflow DAG is responsible for the execution of Python scraping modules.
+It runs periodically every X minutes producing micro-batches.
 - First task updates **proxypool**. Using proxies in combination with rotating user agents can help get scrapers past most of the anti-scraping measures and prevent being detected as a scraper.
 
-- Second task extracts news from RSS feeds provided in the configuration file, validates the quality and sends data into **Kafka topic A**. The extraction process is using proxies from **proxypool**.
+- Second task extracts news from RSS feeds provided in the configuration file, validates the quality and sends data into **Kafka topic A**. The extraction process is using validated proxies from **proxypool**.
 
 #### Data flow
-- Kafka Connect **Mongo Sink** consumes data from **Kafka topic A** and stores news in MongoDB.
+- Kafka Connect **Mongo Sink** consumes data from **Kafka topic A** and stores news in MongoDB using upsert functionality based on **_id** field.
 - **Debezium MongoDB Source** tracks a MongoDB replica set for document changes in databases and collections, recording those changes as events in **Kafka topic B**.
-- Kafka Connect **Elasticsearch Sink** consumes data from **Kafka topic B** and stores news in Elasticsearch. Data replication between topics **A** and **B** ensures MongoDB and ElasticSearch Synchronization.
+- Kafka Connect **Elasticsearch Sink** consumes data from **Kafka topic B** and upserts news in Elasticsearch. Data replicated between topics **A** and **B** ensures MongoDB and ElasticSearch synchronization.
 
 #### Data access
-- Data gathered by previous steps can be easily accessed using [API](api) endpoints.
+- Data gathered by previous steps can be easily accessed in [API service](api)  using public endpoints.
 
 <!-- PREREQUISITES -->
 ## Prerequisites
-Software required to run project:
-- [Docker](https://docs.docker.com)
+Software required to run the project. Install:
+- [Docker](https://docs.docker.com/get-docker/)
 - [Python 3.8+ (pip)](https://www.python.org/)
-- [docker-compose](https://docs.docker.com)
-
-```sh
-python -m pip install docker-compose
-```
+- [docker-compose](https://docs.docker.com/compose/install/)
 
 <!-- RUNNING PROJECT -->
 ## Running project
@@ -77,10 +74,18 @@ Script `manage.sh` - wrapper for `docker-compose` works as a managing tool.
 ./manage.sh down
 ```
 
+<!-- TESTING -->
+## Testing
+Script `run_tests.sh` executes unit tests against Airflow scraping modules and Django Rest Framework applications.
+
+```sh
+./run_tests.sh
+```
+
 
 <!-- API -->
-## API
-See detailed documentation in [API](api) module.
+## API service
+Read detailed [documentation](api) on how to interact with data collected by pipeline using **search** endpoints.
 
 Example searches:
 - see all news
@@ -104,14 +109,6 @@ http://0.0.0.0:5000/api/v1/news/?search=title|Lewandowski
 http://0.0.0.0:5000/api/v1/news/?search=lewandowski&language=pl
 ```
 
-<!-- TESTING -->
-## Testing
-Script `run_tests.sh` executes unit tests against Airflow scraping modules and Django Rest Framework applications.
-
-```sh
-./run_tests.sh
-```
-
 <!-- REFERENCES -->
 ## References
 Inspired by following codes, articles and videos:
@@ -119,7 +116,7 @@ Inspired by following codes, articles and videos:
 * [How we launched a data product in 60 days with AWS](https://towardsdatascience.com/launching-beta-data-product-within-two-month-with-aws-6ac6b55a9b5d)
 * [Toruń JUG #55 - "Kafka Connect - szwajcarski scyzoryk w rękach inżyniera?" - Mariusz Strzelecki](https://www.youtube.com/watch?v=iiz6t8g5t6Q)
 * [Kafka Elasticsearch Sink Connector and the Power of Single Message Transformations](https://sap1ens.com/blog/2020/05/23/kafka-elasticsearch-sink-connector-and-the-power-of-single-message-transformations/)
-
+* [Docker Tips and Tricks with Kafka Connect, ksqlDB, and Kafka](https://rmoff.net/2018/12/15/docker-tips-and-tricks-with-kafka-connect-ksqldb-and-kafka/)
 
 <!-- CONTRIBUTIONS -->
 ## Contributions
@@ -138,5 +135,5 @@ Distributed under the MIT License. See [LICENSE](LICENSE) for more information.
 
 <!-- CONTACT -->
 ## Contact
-If you have any questions or suggestions please feel free to contact me.
-Damian Kliś [@DamianKlis](https://twitter.com/DamianKlis)
+Please feel free to contact me if you have any questions.
+[Damian Kliś](https://www.linkedin.com/in/klisdamian/) [@DamianKlis](https://twitter.com/DamianKlis)

@@ -2,6 +2,7 @@
 omit =
     *test*.py
     *main.py
+    *random_headers_list.py
 
 [report]
 exclude_lines =
