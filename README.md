@@ -43,7 +43,7 @@ It runs periodically every X minutes producing micro-batches.
 #### Data flow
 - Kafka Connect **Mongo Sink** consumes data from **Kafka topic A** and stores news in MongoDB using upsert functionality based on **_id** field.
 - **Debezium MongoDB Source** tracks a MongoDB replica set for document changes in databases and collections, recording those changes as events in **Kafka topic B**.
-- Kafka Connect **Elasticsearch Sink** consumes data from **Kafka topic B** and upserts news in Elasticsearch. Data replicated between topics **A** and **B** ensures MongoDB and ElasticSearch synchronization.
+- Kafka Connect **Elasticsearch Sink** consumes data from **Kafka topic B** and upserts news in Elasticsearch. Data replicated between topics **A** and **B** ensures MongoDB and ElasticSearch synchronization.  stands for Command Query Responsibility Segregation. CQRS pattern allows the use of separate models for updating and reading information.
 
 #### Data access
 - Data gathered by previous steps can be easily accessed in [API service](api)  using public endpoints.
