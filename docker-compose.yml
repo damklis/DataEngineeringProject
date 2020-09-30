@@ -120,14 +120,27 @@ services:
             - MONGO_HOST=${MONGO_HOST}
             - MONGO_USR=${RSS_NEWS}
             - MONGO_PASSWD=${RSS_NEWS}
-        ports:
-            - 5000:5000
+            - ALLOWED_HOSTS=${ALLOWED_HOSTS}
+        volumes:
+            - ./api/app:/app
+            - static_data:/app/static
         depends_on:
             - mongo
             - elasticsearch
-        volumes:
-            - ./api/app:/app
+    
+    proxy:
+        container_name: proxy
+        build: ./api/proxy
+        ports: 
+            - 5000:5000
+        volumes: 
+            - static_data:/vol/static
+        depends_on: 
+            - api
 
 networks: 
     default:
         name: backend-net
+
+volumes:
+    static_data: {}

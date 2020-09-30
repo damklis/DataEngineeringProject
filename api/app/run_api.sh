@@ -13,4 +13,5 @@ echo -e $(date) "Elasticsearch is ready! HTTP state: " $(curl -s -o /dev/null -w
 
 echo -e "Creating Django-Elastic index"
 python manage.py search_index --create &
-python manage.py runserver 0.0.0.0:5000 
+python manage.py collectstatic --noinput &
+uwsgi --socket :8000 --master --enable-threads --module core.wsgi

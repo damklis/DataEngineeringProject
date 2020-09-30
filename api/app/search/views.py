@@ -13,7 +13,7 @@ from search.serializers import NewsDocumentSerializer
 class NewsDocumentView(DocumentViewSet):
     document = NewsDocument
     serializer_class = NewsDocumentSerializer
-    lookup_field = "id"
+    lookup_field = "title"
     filter_backends = [
         CompoundSearchFilterBackend,
         FilteringFilterBackend,
