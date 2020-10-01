@@ -1,4 +1,4 @@
-FROM python:3
+FROM python:3.8
 
 COPY requirements.txt .
 
@@ -8,6 +8,9 @@ ADD app/ /app
 
 WORKDIR /app
 
-RUN chmod +x ./run_api.sh
+RUN chmod +x ./run_api.sh \
+&& adduser api
+
+USER api
 
 CMD [ "./run_api.sh" ]
