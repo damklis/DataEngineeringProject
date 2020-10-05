@@ -138,6 +138,15 @@ services:
         depends_on: 
             - api
 
+    minio:
+        container_name: minio
+        image: 'bitnami/minio:latest'
+        ports:
+            - 9000:9000
+        environment:
+            - MINIO_ACCESS_KEY=minio-access-key
+            - MINIO_SECRET_KEY=minio-secret-key
+
 networks: 
     default:
         name: backend-net
