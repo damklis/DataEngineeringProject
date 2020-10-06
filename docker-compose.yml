@@ -140,12 +140,13 @@ services:
 
     minio:
         container_name: minio
-        image: 'bitnami/minio:latest'
+        build: ./minio
         ports:
             - 9000:9000
         environment:
-            - MINIO_ACCESS_KEY=minio-access-key
-            - MINIO_SECRET_KEY=minio-secret-key
+            - MINIO_ACCESS_KEY=${MINIO_ACCESS_KEY}
+            - MINIO_SECRET_KEY=${MINIO_SECRET_KEY}
+            - DEFAULT_BUCKET=${MINIO_DEFAULT_BUCKET}
 
 networks: 
     default:
