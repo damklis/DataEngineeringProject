@@ -86,6 +86,7 @@ services:
             - kafka
             - schema-registry
             - api
+            - minio
 
     elasticsearch:
         container_name: elasticsearch
