@@ -1,0 +1,27 @@
+{
+    "name":"s3-minio-sink",
+    "config":{
+        "connector.class":"io.confluent.connect.s3.S3SinkConnector",
+        "tasks.max":"1",
+        "topics":"news.rss_news.rss_news",
+        "s3.bucket.name":"rssnews",
+        "s3.part.size":"5242880",
+        "s3.compression.type":"gzip",
+        "flush.size":"1000",
+        "aws.access.key.id": "minio",
+        "aws.secret.access.key": "minio-secret-key",
+        "store.url":"http://minio:9000",
+        "format.class": "io.confluent.connect.s3.format.json.JsonFormat",
+        "storage.class": "io.confluent.connect.s3.storage.S3Storage",
+        "schema.compatibility": "NONE",
+        "schemas.enable":false,
+        "key.converter": "org.apache.kafka.connect.json.JsonConverter",
+        "key.converter.schemas.enable":false,
+        "value.converter":"org.apache.kafka.connect.json.JsonConverter",
+        "value.converter.schemas.enable": false,
+        "partitioner.class": "io.confluent.connect.storage.partitioner.DailyPartitioner",
+        "path.format":"'year'=YYYY/'month'=MM/'day'=dd",
+        "locale": "US",
+        "timezone": "UTC"
+    }
+}

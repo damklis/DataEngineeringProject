@@ -86,6 +86,7 @@ services:
             - kafka
             - schema-registry
             - api
+            - minio
 
     elasticsearch:
         container_name: elasticsearch
@@ -137,6 +138,16 @@ services:
             - static_data:/vol/static
         depends_on: 
             - api
+
+    minio:
+        container_name: minio
+        build: ./minio
+        ports:
+            - 9000:9000
+        environment:
+            - MINIO_ACCESS_KEY=${MINIO_ACCESS_KEY}
+            - MINIO_SECRET_KEY=${MINIO_SECRET_KEY}
+            - DEFAULT_BUCKET=${MINIO_DEFAULT_BUCKET}
 
 networks: 
     default:
