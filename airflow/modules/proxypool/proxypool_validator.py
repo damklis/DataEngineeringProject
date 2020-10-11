@@ -13,9 +13,10 @@ class ProxyStatus:
 
 @log
 class ProxyPoolValidator:
-    def __init__(self, url, timeout=10, checks=5):
+    def __init__(self, url, timeout=10, checks=5, sleep_interval=1.0):
         self.timeout = timeout
         self.checks = checks
+        self.sleep_interval = sleep_interval
         self.parser = WebParser(url, rotate_header=True)
 
     def validate_proxy(self, proxy_record):
@@ -25,7 +26,7 @@ class ProxyPoolValidator:
                 timeout=self.timeout,
                 proxies=proxy_record.proxy
             )
-            time.sleep(1)
+            time.sleep(self.sleep_interval)
             consecutive_checks.append(int(content is not None))
 
         health = sum(consecutive_checks) / self.checks
