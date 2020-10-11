@@ -33,7 +33,7 @@ class ProxyPoolValidator:
         proxy_status = ProxyStatus(
             proxy=proxy_record.proxy,
             health=health,
-            is_valid=health>=0.6 
+            is_valid=health >= 0.6
         )
         self.logger.info(f"Proxy status: {proxy_status}")
         return proxy_status
