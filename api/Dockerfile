@@ -9,7 +9,8 @@ ADD app/ /app
 WORKDIR /app
 
 RUN chmod +x ./run_api.sh \
-&& adduser api
+&& useradd api \
+&& chown -R api /app
 
 USER api
 
