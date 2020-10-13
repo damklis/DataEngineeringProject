@@ -23,7 +23,7 @@ class RedisProxyPoolClient:
             json.loads(proxy) for proxy in response
         ]
 
-    def get_random_proxy(self):
+    def get_proxy(self):
         existing_proxies = self.list_existing_proxies()
         return random.choice(
             existing_proxies

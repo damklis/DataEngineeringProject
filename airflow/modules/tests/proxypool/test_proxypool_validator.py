@@ -35,7 +35,7 @@ def test_unstable_valid_proxy(get_content, raw_content, web_parser, proxy_record
     expected = True
 
     valid_content = raw_content("proxy_list_file.txt")
-    get_content.side_effect = [valid_content, valid_content, None, valid_content, valid_content]
+    get_content.side_effect = [valid_content, valid_content, None]
     validator = ProxyPoolValidator("https://google.com", sleep_interval=0)
     validator.parser = web_parser
 
@@ -43,14 +43,14 @@ def test_unstable_valid_proxy(get_content, raw_content, web_parser, proxy_record
     result = proxy_record.is_valid
 
     assert result == expected
-    assert proxy_record.health == 0.8
+    assert round(proxy_record.health, 2) == 0.67
 
 @patch("parser.web_parser.WebParser.get_content")
 def test_unstable_invalid_proxy(get_content, raw_content, web_parser, proxy_record):
     expected = False
 
     valid_content = raw_content("proxy_list_file.txt")
-    get_content.side_effect = [None, None, valid_content, None, None]
+    get_content.side_effect = [None, None, valid_content]
     validator = ProxyPoolValidator("https://google.com", sleep_interval=0)
     validator.parser = web_parser
 
@@ -58,5 +58,4 @@ def test_unstable_invalid_proxy(get_content, raw_content, web_parser, proxy_reco
     result = proxy_record.is_valid
 
     assert result == expected
-    assert proxy_record.health == 0.2
-
+    assert round(proxy_record.health, 2) == 0.33
