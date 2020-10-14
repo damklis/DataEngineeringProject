@@ -19,11 +19,13 @@ class Config:
     NUMBER_OF_PROXIES = 50
 
     RSS_FEEDS = {
-        "goal.com": "https://www.goal.com/feeds/en/news",
-        "eyefootball": "https://www.eyefootball.com/football_news.xml",
-        "101greatgoals": "https://www.101greatgoals.com/feed/",
-        "sportslens": "https://sportslens.com/feed/",
-        "deadspin": "https://deadspin.com/rss"
+        "en": {
+            "goal.com": "https://www.goal.com/feeds/en/news",
+            "eyefootball": "https://www.eyefootball.com/football_news.xml",
+            "101greatgoals": "https://www.101greatgoals.com/feed/",
+            "sportslens": "https://sportslens.com/feed/",
+            "deadspin": "https://deadspin.com/rss"
+        }
     }
 
     BOOTSTRAP_SERVERS = ["kafka:9092"]

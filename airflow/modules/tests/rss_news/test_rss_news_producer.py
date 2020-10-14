@@ -70,14 +70,3 @@ def test_assing_author(formatter, author, expected):
     result = formatter.assign_author(author)
 
     assert result == expected
-
-
-@pytest.mark.parametrize(
-    "phrase, expected",
-    [("Cześć, testujemy!", "pl"), ("Hello, we are testing!", "en")]
-)
-def test_detect_language(formatter, phrase, expected):
-
-    result = formatter.detect_language(phrase)
-
-    assert result == expected

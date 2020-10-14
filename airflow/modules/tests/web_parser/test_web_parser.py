@@ -1,6 +1,7 @@
 from unittest.mock import patch
 import pytest
 from pytest import fixture
+from parser import WebParser
 
 from ..fixtures import web_parser, response  
 
@@ -27,4 +28,28 @@ def test_is_good_response(web_parser, response, status_code, expected):
 
     result = web_parser.is_good_response(http_response)
     
+    assert result == expected
+
+
+def test_get_random_header(web_parser):
+    expected = "User-Agent"
+    
+    result = list(web_parser.get_random_header().keys())
+
+    assert expected in result
+
+
+@pytest.mark.parametrize(
+    "url, expected",
+    [
+        ("https://test.com", "WebParser of TEST.COM"),
+        ("https://www.test.com", "WebParser of TEST.COM"),
+        ("www.test.com", "WebParser of TEST.COM")
+    ]
+)
+def test__str__representation(url, expected):
+    web_parser = WebParser(url)
+
+    result = str(web_parser)
+
     assert result == expected

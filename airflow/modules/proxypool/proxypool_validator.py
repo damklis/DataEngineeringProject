@@ -1,7 +1,7 @@
+import time
 from dataclasses import dataclass
 from parser import WebParser
 from log import log
-import time
 
 
 @dataclass(frozen=True)

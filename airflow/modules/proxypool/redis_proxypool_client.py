@@ -1,4 +1,3 @@
-import random
 import json
 import redis
 
@@ -25,9 +24,11 @@ class RedisProxyPoolClient:
 
     def get_proxy(self):
         existing_proxies = self.list_existing_proxies()
-        return random.choice(
-            existing_proxies
-        )
+        if len(existing_proxies) > 0:
+            return existing_proxies[0]
+
+    def lpop_proxy(self):
+        self.redis.lpop(self.key)
 
     def __exit__(self, type, value, traceback):
         client_id = self.redis.client_id()
