@@ -1,6 +1,7 @@
 from unittest.mock import patch
 import pytest
 from pytest import fixture
+from requests.exceptions import ConnectionError
 from parser import WebParser
 
 from ..fixtures import web_parser, response  
@@ -14,6 +15,17 @@ def test_get_content(mock_get, web_parser):
     mock_get.return_value.status_code = 200
     mock_get.return_value.headers['Content-Type'] = "text/html"
 
+    result = web_parser.get_content()
+
+    assert result == expected
+
+
+@patch("parser.web_parser.get")
+def test_get_content_silence_exception(mock_get, web_parser):
+    expected = None
+    
+    mock_get.side_effect = ConnectionError()
+    
     result = web_parser.get_content()
 
     assert result == expected
