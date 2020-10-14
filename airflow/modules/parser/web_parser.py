@@ -9,11 +9,11 @@ from parser.random_headers_list import headers_list
 
 @log
 class WebParser:
-    def __init__(self, website_url, rotate_header=False):
+    def __init__(self, website_url, rotate_header=True):
         self.url = website_url
         self._rotate_header = rotate_header
 
-    def _get_random_header(self):
+    def get_random_header(self):
         if self._rotate_header:
             return random.choice(headers_list)
 
@@ -21,7 +21,7 @@ class WebParser:
         kwargs = {
             "timeout": timeout,
             "proxies": proxies,
-            "headers": self._get_random_header()
+            "headers": self.get_random_header()
         }
         try:
             with closing(get(self.url, **kwargs)) as response:

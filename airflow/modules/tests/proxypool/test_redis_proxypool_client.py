@@ -34,3 +34,32 @@ def test_list_existing_proxies(redis, redis_config, redis_mock, proxies):
     result = redis_client.list_existing_proxies()
 
     assert result == proxies
+
+
+@patch("proxypool.redis_proxypool_client.redis.StrictRedis")
+def test_lpop_proxy(redis, redis_config, redis_mock, proxies):
+    expected = 1
+    
+    key = "test"
+    redis_mock.lpush(key, *[json.dumps(_) for _ in proxies])
+
+    redis_client = RedisProxyPoolClient(key, redis_config)
+    redis_client.redis = redis_mock
+
+    redis_client.lpop_proxy()
+
+    assert len(proxies) == expected
+
+@patch("proxypool.redis_proxypool_client.redis.StrictRedis")
+def test_get_proxy(redis, redis_config, redis_mock, proxies):
+    expected = proxies[0]
+    
+    key = "test"
+    redis_mock.lpush(key, *[json.dumps(_) for _ in proxies])
+
+    redis_client = RedisProxyPoolClient(key, redis_config)
+    redis_client.redis = redis_mock
+
+    result = redis_client.get_proxy()
+
+    assert result == expected

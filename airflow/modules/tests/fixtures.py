@@ -1,6 +1,7 @@
 from pkg_resources import resource_string
 import pytest
 import fakeredis
+
 from parser import WebParser
 from requests import Response
 from rss_news import NewsProducer, NewsFormatter, NewsValidator, News
@@ -47,18 +48,21 @@ def proxy_record():
 
 @pytest.fixture
 def producer():
-    yield NewsProducer(TEST_URL)
+    yield NewsProducer(TEST_URL, "en")
 
 
 @pytest.fixture
 def formatter():
-    yield NewsFormatter()
+    yield NewsFormatter("en")
 
 
 @pytest.fixture
 def validator():
     yield NewsValidator(
-        {"description_length": 10, "languages": ["en"]}
+        {
+            "description_length": 10,
+            "languages": ["en"]
+        }
     )
 
 

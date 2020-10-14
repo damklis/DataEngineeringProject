@@ -1,7 +1,7 @@
+import time
 from dataclasses import dataclass
 from parser import WebParser
 from log import log
-import time
 
 
 @dataclass(frozen=True)
@@ -13,7 +13,7 @@ class ProxyStatus:
 
 @log
 class ProxyPoolValidator:
-    def __init__(self, url, timeout=10, checks=5, sleep_interval=1.0):
+    def __init__(self, url, timeout=10, checks=3, sleep_interval=0.1):
         self.timeout = timeout
         self.checks = checks
         self.sleep_interval = sleep_interval
@@ -33,7 +33,7 @@ class ProxyPoolValidator:
         proxy_status = ProxyStatus(
             proxy=proxy_record.proxy,
             health=health,
-            is_valid=health >= 0.6
+            is_valid=health > 0.66
         )
         self.logger.info(f"Proxy status: {proxy_status}")
         return proxy_status

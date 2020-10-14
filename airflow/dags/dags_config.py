@@ -14,16 +14,18 @@ class Config:
 
     REDIS_KEY = "proxies"
 
-    MAX_WORKERS = 20
+    MAX_WORKERS = 50
 
-    NUMBER_OF_PROXIES = 100
+    NUMBER_OF_PROXIES = 50
 
     RSS_FEEDS = {
-        "goal.com": "https://www.goal.com/feeds/en/news",
-        "eyefootball": "https://www.eyefootball.com/football_news.xml",
-        "101greatgoals": "https://www.101greatgoals.com/feed/",
-        "sportslens": "https://sportslens.com/feed/",
-        "deadspin": "https://deadspin.com/rss"
+        "en": {
+            "goal.com": "https://www.goal.com/feeds/en/news",
+            "eyefootball": "https://www.eyefootball.com/football_news.xml",
+            "101greatgoals": "https://www.101greatgoals.com/feed/",
+            "sportslens": "https://sportslens.com/feed/",
+            "deadspin": "https://deadspin.com/rss"
+        }
     }
 
     BOOTSTRAP_SERVERS = ["kafka:9092"]

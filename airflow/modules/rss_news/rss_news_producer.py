@@ -2,7 +2,6 @@
 import re
 from dataclasses import dataclass
 import atoma
-import langid
 from parser import WebParser
 
 
@@ -21,9 +20,9 @@ class News:
 
 
 class NewsProducer:
-    def __init__(self, rss_feed):
+    def __init__(self, rss_feed, language):
         self.parser = WebParser(rss_feed, rotate_header=True)
-        self.formatter = NewsFormatter()
+        self.formatter = NewsFormatter(language)
 
     def _extract_news_feed_items(self, proxies):
         content = self.parser.get_content(proxies=proxies)
@@ -38,7 +37,8 @@ class NewsProducer:
 
 
 class NewsFormatter:
-    def __init__(self):
+    def __init__(self, language):
+        self.language = language
         self.date_format = "%Y-%m-%d %H:%M:%S"
         self.id_regex = "[^0-9a-zA-Z_-]+"
         self.default_author = "Unknown"
@@ -52,7 +52,7 @@ class NewsFormatter:
             self.unify_date(entry.pub_date),
             description,
             self.assign_author(entry.author),
-            self.detect_language(description)
+            self.language
         )
 
     def construct_id(self, title):
@@ -64,8 +64,7 @@ class NewsFormatter:
     def assign_author(self, author):
         return self.default_author if not author else author
 
-    @staticmethod
-    def format_description(entry):
+    def format_description(self, entry):
         tmp_description = re.sub("<.*?>", "", entry.description[:1000])
         index = tmp_description.rfind(".")
         short_description = tmp_description[:index+1]
@@ -73,8 +72,3 @@ class NewsFormatter:
             short_description if short_description
             else entry.title
         )
-
-    @staticmethod
-    def detect_language(description):
-        detected_language = langid.classify(description)
-        return detected_language[0]

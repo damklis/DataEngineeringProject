@@ -25,7 +25,7 @@ def test_check_null_values_with_nones(validator, news_record):
     assert result is expected
 
 
-def test_check_language(validator, news_record):
+def test_check_languages(validator, news_record):
     expected = True
 
     news = news_record.as_dict()
