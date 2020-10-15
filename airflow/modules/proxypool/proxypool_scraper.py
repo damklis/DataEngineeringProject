@@ -1,6 +1,7 @@
 from bs4 import BeautifulSoup
 from dataclasses import dataclass, field
 from parser import WebParser
+from log import log
 
 
 @dataclass
@@ -24,6 +25,7 @@ class ProxyRecord:
         return {"http": url, "https": url}
 
 
+@log
 class ProxyPoolScraper:
     def __init__(self, url, bs_parser="lxml"):
         self.parser = WebParser(url)
@@ -35,6 +37,7 @@ class ProxyPoolScraper:
             map(self._clear_up_record, raw_records)
         )
         for record in clean_records[:limit]:
+            self.logger.info(f"Proxy record: {record}")
             if record:
                 yield ProxyRecord(*record)
 

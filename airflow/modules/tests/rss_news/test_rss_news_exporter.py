@@ -2,8 +2,8 @@ from unittest.mock import patch
 import pytest
 
 
-@patch("rss_news.NewsExporter.export_news_to_broker")
-def test_export_news_to_broker(export_news_to_broker):
+@patch("rss_news.NewsExporter")
+def test_export_news_to_broker(exporter):
     topic = "test_topic"
     news = {
         "_id": "test_id",
@@ -14,7 +14,8 @@ def test_export_news_to_broker(export_news_to_broker):
         "author": "Test",
         "language": "pl"
     }
+    exporter.export_news_to_broker(topic, news)
 
-    export_news_to_broker(topic, news)
-
-    export_news_to_broker.assert_called_once_with(topic, news)
+    exporter.export_news_to_broker.assert_called_once_with(
+        topic, news
+    )

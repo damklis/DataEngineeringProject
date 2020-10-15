@@ -29,7 +29,6 @@ class WebParser:
                     return (
                         response.content
                     )
-                self.logger.info("Bad response")
         except Exception as err:
             self.logger.info(f"Error occurred: {err}")
 

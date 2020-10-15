@@ -46,7 +46,8 @@ def test_is_good_response(web_parser, response, status_code, expected):
 def test_get_random_header(web_parser):
     expected = "User-Agent"
     
-    result = list(web_parser.get_random_header().keys())
+    random_header = web_parser.get_random_header()
+    result = list(random_header.keys())
 
     assert expected in result
 
