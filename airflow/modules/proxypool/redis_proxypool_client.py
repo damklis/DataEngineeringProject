@@ -31,7 +31,7 @@ class RedisProxyPoolClient:
             return existing_proxies[0]
 
     def lpop_proxy(self):
-        self.logger.info(f"Deleting proxy!")
+        self.logger.info("Deleting proxy!")
         self.redis.lpop(self.key)
 
     def __exit__(self, type, value, traceback):
