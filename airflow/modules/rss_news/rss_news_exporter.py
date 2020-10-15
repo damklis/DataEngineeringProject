@@ -7,10 +7,10 @@ class NewsExporter:
     def __init__(self, bootstrap_servers):
         self.producer = KafkaProducer(
             bootstrap_servers=bootstrap_servers,
-            value_serializer=lambda x: self._encode(x)
+            value_serializer=lambda x: self._encode_news(x)
         )
 
-    def _encode(self, value):
+    def _encode_news(self, value):
         return json.dumps(value).encode("utf-8")
 
     def __enter__(self):
