@@ -1,15 +1,14 @@
-from proxypool import RedisProxyPoolClient
 from log import Logger
 from rss_news.rss_news_producer import NewsProducer
 from rss_news.rss_news_exporter import NewsExporter
 from rss_news.rss_news_validator import NewsValidator
+from proxypool import RedisProxyPoolClient
 from retry import RetryOnException as retry
 
 
 @retry(5)
 def export_news_to_broker(config, rss_feed, language):
     logger = Logger().get_logger(__name__)
-    rss_feed = config.RSS_FEEDS[language][rss_feed]
     validator = NewsValidator(config.VALIDATOR_CONFIG)
     producer = NewsProducer(rss_feed, language)
     redis = RedisProxyPoolClient(config.REDIS_KEY, config.REDIS_CONFIG)

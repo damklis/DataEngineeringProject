@@ -25,6 +25,9 @@ class Config:
             "101greatgoals": "https://www.101greatgoals.com/feed/",
             "sportslens": "https://sportslens.com/feed/",
             "deadspin": "https://deadspin.com/rss"
+        },
+        "pl": {
+            "weszlo.com": "https://weszlo.com/feed/"
         }
     }
 
@@ -34,5 +37,5 @@ class Config:
 
     VALIDATOR_CONFIG = {
         "description_length": 10,
-        "languages": ["en"]
+        "languages": ["en", "pl"]
     }
