@@ -1,30 +1,26 @@
+from urllib.parse import urlparse
 from datetime import datetime
 from airflow import DAG
 from airflow.operators.python_operator import PythonOperator
-from dags_config import Config as config
 
+from dags_config import Config as config
 from rss_news import export_news_to_broker
 from proxypool import update_proxypool
 
 
-LANGUAGE = "en"
+def extract_feed_name(url):
+    parsed_url = urlparse(url)
+    return parsed_url.netloc.replace("www.", "")
 
 
-def dummy_callable(task_id, action, dag):
-    def foo(action):
-        return f"{datetime.now()}: {action} scrapping RSS feeds!"
+def dummy_callable(action):
+    return f"{datetime.now()}: {action} scrapping RSS feeds!"
 
+
+def export_events(config, rss_feed, language, dag):
+    feed_name = extract_feed_name(rss_feed)
     return PythonOperator(
-        task_id=task_id,
-        python_callable=foo,
-        op_kwargs={"action": action},
-        dag=dag
-    )
-
-
-def exporting_events(config, rss_feed, language, dag):
-    return PythonOperator(
-        task_id=f"exporting_{rss_feed}_news_to_broker",
+        task_id=f"exporting_{feed_name}_news_to_broker",
         python_callable=export_news_to_broker,
         op_kwargs={
             "config": config, "rss_feed": rss_feed, "language": language
@@ -33,29 +29,52 @@ def exporting_events(config, rss_feed, language, dag):
     )
 
 
-dag = DAG(
-    "rss_news_dag",
-    description="scrape rss feeds and export events to broker via proxypool",
-    schedule_interval="*/10 * * * *",
-    start_date=datetime(2020, 1, 1),
-    catchup=False,
-    is_paused_upon_creation=False
-)
+def create_dag(dag_id, interval, config, language, rss_feeds):
+    with DAG(
+        dag_id=dag_id,
+        description=f"Scrape latest ({language}) sport RSS feeds",
+        schedule_interval=interval,
+        start_date=datetime(2020, 1, 1),
+        catchup=False,
+        is_paused_upon_creation=False
+    ) as dag:
 
-proxypool = PythonOperator(
-    task_id="updating_proxypoool",
-    python_callable=update_proxypool,
-    op_kwargs={"config": config},
-    dag=dag
-)
+        start = PythonOperator(
+            task_id="starting_pipeline",
+            python_callable=dummy_callable,
+            op_kwargs={"action": "starting"},
+            dag=dag
+        )
 
-start = dummy_callable("starting_pipeline", "started", dag)
+        proxypool = PythonOperator(
+            task_id="updating_proxypoool",
+            python_callable=update_proxypool,
+            op_kwargs={"config": config},
+            dag=dag
+        )
 
-exporting_tasks = [
-    exporting_events(config, rss_feed, LANGUAGE, dag)
-    for rss_feed in config.RSS_FEEDS[LANGUAGE]
-]
+        events = [
+            export_events(config, rss_feed, language, dag)
+            for rss_feed in rss_feeds
+        ]
 
-finish = dummy_callable("finishing_pipeline", "finished", dag)
+        finish = PythonOperator(
+            task_id="finishing_pipeline",
+            python_callable=dummy_callable,
+            op_kwargs={"action": "finishing"},
+            dag=dag
+        )
 
-start >> proxypool >> exporting_tasks >> finish
+        start >> proxypool >> events >> finish
+
+    return dag
+
+
+for n, item in enumerate(config.RSS_FEEDS.items()):
+    language, rss_feeds = item
+    dag_id = f"rss_news_{language}"
+    interval = f"{n*5}-59/10 * * * *"
+
+    globals()[dag_id] = create_dag(
+        dag_id, interval, config, language, rss_feeds
+    )

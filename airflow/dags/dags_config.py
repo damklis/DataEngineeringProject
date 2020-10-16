@@ -19,13 +19,19 @@ class Config:
     NUMBER_OF_PROXIES = 50
 
     RSS_FEEDS = {
-        "en": {
-            "goal.com": "https://www.goal.com/feeds/en/news",
-            "eyefootball": "https://www.eyefootball.com/football_news.xml",
-            "101greatgoals": "https://www.101greatgoals.com/feed/",
-            "sportslens": "https://sportslens.com/feed/",
-            "deadspin": "https://deadspin.com/rss"
-        }
+        "en": [
+            "https://www.goal.com/feeds/en/news",
+            "https://www.eyefootball.com/football_news.xml",
+            "https://www.101greatgoals.com/feed/",
+            "https://sportslens.com/feed/",
+            "https://deadspin.com/rss"
+        ],
+        "pl": [
+            "https://weszlo.com/feed/",
+            "https://sportowefakty.wp.pl/rss.xml",
+            "https://futbolnews.pl/feed",
+            "https://igol.pl/feed/"
+        ]
     }
 
     BOOTSTRAP_SERVERS = ["kafka:9092"]
@@ -34,5 +40,5 @@ class Config:
 
     VALIDATOR_CONFIG = {
         "description_length": 10,
-        "languages": ["en"]
+        "languages": ["en", "pl"]
     }
