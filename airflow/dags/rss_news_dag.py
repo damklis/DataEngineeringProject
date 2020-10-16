@@ -55,7 +55,7 @@ def create_dag(dag_id, interval, config, language, rss_feeds):
 
         events = [
             export_events(config, rss_feed, language, dag)
-            for rss_feed in rss_feeds.values()
+            for rss_feed in rss_feeds
         ]
 
         finish = PythonOperator(
