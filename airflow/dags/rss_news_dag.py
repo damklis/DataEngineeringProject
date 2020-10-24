@@ -73,7 +73,7 @@ def create_dag(dag_id, interval, config, language, rss_feeds):
 for n, item in enumerate(config.RSS_FEEDS.items()):
     language, rss_feeds = item
     dag_id = f"rss_news_{language}"
-    interval = f"{n*5}-59/10 * * * *"
+    interval = f"{n*4}-59/10 * * * *"
 
     globals()[dag_id] = create_dag(
         dag_id, interval, config, language, rss_feeds
