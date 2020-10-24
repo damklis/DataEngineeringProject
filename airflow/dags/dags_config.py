@@ -31,6 +31,12 @@ class Config:
             "https://sportowefakty.wp.pl/rss.xml",
             "https://futbolnews.pl/feed",
             "https://igol.pl/feed/"
+        ],
+        "es": [
+            "https://as.com/rss/tags/ultimas_noticias.xml",
+            "https://e00-marca.uecdn.es/rss/futbol/mas-futbol.xml",
+            "https://www.futbolred.com/rss-news/liga-de-espana.xml",
+            "https://www.futbolya.com/rss/noticias.xml"
         ]
     }
 
@@ -40,5 +46,5 @@ class Config:
 
     VALIDATOR_CONFIG = {
         "description_length": 10,
-        "languages": ["en", "pl"]
+        "languages": ["en", "pl", "es"]
     }
