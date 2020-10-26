@@ -37,6 +37,10 @@ class Config:
             "https://e00-marca.uecdn.es/rss/futbol/mas-futbol.xml",
             "https://www.futbolred.com/rss-news/liga-de-espana.xml",
             "https://www.futbolya.com/rss/noticias.xml"
+        ],
+        "de": [
+            "https://www.spox.com/pub/rss/sport-media.xml",
+            "https://www.dfb.de/news/rss/feed/"
         ]
     }
 
@@ -46,5 +50,7 @@ class Config:
 
     VALIDATOR_CONFIG = {
         "description_length": 10,
-        "languages": ["en", "pl", "es"]
+        "languages": [
+            "en", "pl", "es", "de"
+        ]
     }
