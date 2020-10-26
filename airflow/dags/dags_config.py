@@ -39,7 +39,6 @@ class Config:
             "https://www.futbolya.com/rss/noticias.xml"
         ],
         "de": [
-            "https://sportbild.bild.de/rss/vw-fussball/vw-fussball-45036878,sort=1,view=rss2.sport.xml",
             "https://www.spox.com/pub/rss/sport-media.xml",
             "https://www.dfb.de/news/rss/feed/"
         ]
