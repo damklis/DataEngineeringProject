@@ -98,7 +98,7 @@ def response():
     yield helper
 
 
-@pytest.fixture()
+@pytest.fixture
 def raw_content():
     def helper(filename):
         return resource_string(
@@ -109,7 +109,7 @@ def raw_content():
     yield helper
 
 
-@pytest.fixture()
+@pytest.fixture
 def add_function():
 
     @retry(5)
