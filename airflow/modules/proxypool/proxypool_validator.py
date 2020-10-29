@@ -21,7 +21,7 @@ class ProxyPoolValidator:
 
     def validate_proxy(self, proxy_record):
         consecutive_checks = []
-        for i in range(self.checks):
+        for _ in range(self.checks):
             content = self.parser.get_content(
                 timeout=self.timeout,
                 proxies=proxy_record.proxy
