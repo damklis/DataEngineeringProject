@@ -5,19 +5,25 @@ from kafka import KafkaProducer
 
 class NewsExporter:
     def __init__(self, bootstrap_servers):
-        self.producer = KafkaProducer(
-            bootstrap_servers=bootstrap_servers,
-            value_serializer=lambda x: self._encode_news(x)
+        self._producer = self._connect_producer(
+            bootstrap_servers
         )
 
-    def _encode_news(self, value):
-        return json.dumps(value).encode("utf-8")
+    def _connect_producer(self, bootstrap_servers):
+        def encode_news(value):
+            return json.dumps(value).encode("utf-8")
+
+        producer = KafkaProducer(
+            bootstrap_servers=bootstrap_servers,
+            value_serializer=lambda x: encode_news(x)
+        )
+        return producer
 
     def __enter__(self):
         return self
 
     def export_news_to_broker(self, topic, record, sleep_time=0.01):
-        response = self.producer.send(
+        response = self._producer.send(
             topic,
             value=record
         )
@@ -27,4 +33,4 @@ class NewsExporter:
         )
 
     def __exit__(self, type, value, traceback):
-        self.producer.close()
+        self._producer.close()
