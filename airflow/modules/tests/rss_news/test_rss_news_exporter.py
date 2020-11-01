@@ -32,7 +32,6 @@ def test_export_news_to_broker(exporter):
 
 @patch("rss_news.rss_news_exporter.KafkaProducer")
 def test_export_news_to_broker_context_manager(mock_producer):
-    mock_producer.send.return_value = Mock()
     topic = "test_topic"
     news = {
         "_id": "test_id",
