@@ -63,3 +63,11 @@ def test_get_proxy(redis, redis_config, redis_mock, proxies):
     result = redis_client.get_proxy()
 
     assert result == expected
+
+
+@patch("proxypool.redis_proxypool_client.redis.StrictRedis")
+def test_redis_client_context_manager(redis, redis_config):
+    key = "test"
+
+    with RedisProxyPoolClient(key, redis_config) as redis_client:
+        pass
