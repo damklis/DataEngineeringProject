@@ -5,7 +5,7 @@ from airflow.operators.python_operator import PythonOperator
 
 from dags_config import Config as config
 from rss_news import export_news_to_broker
-from proxypool import update_proxypool
+from custom_operators import ProxyPoolOperator
 
 
 def extract_feed_name(url):
@@ -23,7 +23,9 @@ def export_events(config, rss_feed, language, dag):
         task_id=f"exporting_{feed_name}_news_to_broker",
         python_callable=export_news_to_broker,
         op_kwargs={
-            "config": config, "rss_feed": rss_feed, "language": language
+            "config": config,
+            "rss_feed": rss_feed,
+            "language": language
         },
         dag=dag
     )
@@ -46,10 +48,14 @@ def create_dag(dag_id, interval, config, language, rss_feeds):
             dag=dag
         )
 
-        proxypool = PythonOperator(
+        proxypool = ProxyPoolOperator(
             task_id="updating_proxypoool",
-            python_callable=update_proxypool,
-            op_kwargs={"config": config},
+            proxy_webpage=config.PROXY_WEBPAGE,
+            number_of_proxies=config.NUMBER_OF_PROXIES,
+            testing_url=config.TESTING_URL,
+            max_workers=config.NUMBER_OF_PROXIES,
+            redis_config=config.REDIS_CONFIG,
+            redis_key=config.REDIS_KEY,
             dag=dag
         )
 
@@ -76,5 +82,9 @@ for n, item in enumerate(config.RSS_FEEDS.items()):
     interval = f"{n*4}-59/10 * * * *"
 
     globals()[dag_id] = create_dag(
-        dag_id, interval, config, language, rss_feeds
+        dag_id,
+        interval,
+        config,
+        language,
+        rss_feeds
     )
