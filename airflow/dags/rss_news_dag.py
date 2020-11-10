@@ -4,8 +4,10 @@ from airflow import DAG
 from airflow.operators.python_operator import PythonOperator
 
 from dags_config import Config as config
-from rss_news import export_news_to_broker
-from custom_operators import ProxyPoolOperator
+from custom_operators import (
+    ProxyPoolOperator,
+    RSSNewsOperator
+)
 
 
 def extract_feed_name(url):
@@ -19,14 +21,15 @@ def dummy_callable(action):
 
 def export_events(config, rss_feed, language, dag):
     feed_name = extract_feed_name(rss_feed)
-    return PythonOperator(
+    return RSSNewsOperator(
         task_id=f"exporting_{feed_name}_news_to_broker",
-        python_callable=export_news_to_broker,
-        op_kwargs={
-            "config": config,
-            "rss_feed": rss_feed,
-            "language": language
-        },
+        validator_config=config.VALIDATOR_CONFIG,
+        rss_feed=rss_feed,
+        language=language,
+        redis_config=config.REDIS_CONFIG,
+        redis_key=config.REDIS_KEY,
+        bootstrap_servers=config.BOOTSTRAP_SERVERS,
+        topic=config.TOPIC,
         dag=dag
     )
 
