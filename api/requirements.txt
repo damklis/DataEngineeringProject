@@ -1,11 +1,6 @@
 certifi==2020.6.20
-<<<<<<< Updated upstream
-Django==2.2.13
-djangorestframework==3.9.2
-=======
 Django==2.2.21
 djangorestframework==3.11.2
->>>>>>> Stashed changes
 djongo==1.3.3
 elasticsearch==7.9.1
 pymongo==3.11.0
