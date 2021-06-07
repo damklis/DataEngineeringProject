@@ -6,7 +6,7 @@ elasticsearch==7.9.1
 pymongo==3.11.0
 pytz==2020.1
 sqlparse==0.2.4
-urllib3==1.25.10
+urllib3==1.26.5
 django-rest-swagger==2.1.2
 PyYAML==5.3.1
 django-elasticsearch-dsl==7.1.4
