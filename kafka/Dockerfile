@@ -1,4 +1,4 @@
-FROM confluentinc/cp-kafka:5.3.1
+FROM confluentinc/cp-kafka:5.3.6
 
 ENV KAFKA_CONFLUENT_SUPPORT_METRICS_ENABLE "false"
 ENV KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR "1"
