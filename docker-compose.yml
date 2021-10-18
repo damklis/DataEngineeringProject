@@ -36,7 +36,7 @@ services:
 
     zookeeper:
         container_name: zookeeper
-        image: confluentinc/cp-zookeeper:5.3.1
+        image: confluentinc/cp-zookeeper:5.3.5
         environment:
             - ZOOKEEPER_CLIENT_PORT=${ZOOKEEPER_CLIENT_PORT}
         ports:
@@ -54,7 +54,7 @@ services:
 
     schema-registry:
         container_name: schema-registry
-        image: confluentinc/cp-schema-registry:5.3.1
+        image: confluentinc/cp-schema-registry:5.3.5
         environment:
             - SCHEMA_REGISTRY_HOST_NAME=${SCHEMA_REGISTRY_HOST_NAME}
             - SCHEMA_REGISTRY_KAFKASTORE_CONNECTION_URL=${ZOOKEEPER_URL}
@@ -135,7 +135,7 @@ services:
         ports: 
             - 5000:5000
         volumes: 
-            - static_data:/vol/static
+            - static_data:/vol/static 
         depends_on: 
             - api
 
