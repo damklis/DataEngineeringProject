@@ -46,7 +46,7 @@ class ProxyPoolScraper:
         soup_object = BeautifulSoup(content, self.bs_parser)
         return (
             soup_object
-            .find(id="proxylisttable")
+            .find(id="list")
             .find_all("tr")
         )
 

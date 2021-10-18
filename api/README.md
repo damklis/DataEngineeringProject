@@ -31,23 +31,23 @@ Each endpoint displays News information:
 ### Examples
 - see all news
 ```
-http://0.0.0.0:5000/api/v1/news/ 
+http://127.0.0.1:5000/api/v1/news/ 
 ```
 -  add `search_fields` title and description, see all of the news containing the `Robert Lewandowski` phrase
 ```
-http://0.0.0.0:5000/api/v1/news/?search=Robert%20Lewandowski 
+http://127.0.0.1:5000/api/v1/news/?search=Robert%20Lewandowski 
 ```
 
 - find news containing the `Lewandowski` phrase in their titles
 
 ```
-http://0.0.0.0:5000/api/v1/news/?search=title|Lewandowski 
+http://127.0.0.1:5000/api/v1/news/?search=title|Lewandowski 
 ```
 
 - see all of the polish news containing the `Lewandowski` phrase
 
 ```
-http://0.0.0.0:5000/api/v1/news/?search=lewandowski&language=pl
+http://127.0.0.1:5000/api/v1/news/?search=lewandowski&language=pl
 ```
 
 ## Endpoints for Admin User

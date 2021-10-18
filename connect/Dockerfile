@@ -1,9 +1,9 @@
-FROM confluentinc/cp-kafka-connect-base:5.3.1
+FROM confluentinc/cp-kafka-connect-base:5.3.5
 
-RUN confluent-hub install --no-prompt mongodb/kafka-connect-mongodb:latest \
+RUN confluent-hub install --no-prompt mongodb/kafka-connect-mongodb:1.0.0 \
 && confluent-hub install --no-prompt confluentinc/kafka-connect-elasticsearch:5.4.0 \
 && confluent-hub install --no-prompt debezium/debezium-connector-mongodb:0.10.0 \
-&& confluent-hub install --no-prompt confluentinc/kafka-connect-s3:latest
+&& confluent-hub install --no-prompt confluentinc/kafka-connect-s3:10.0.3
 
 ENV CONNECT_KAFKA_HEAP_OPTS "-Xms512m -Xmx512m"
 ENV CONNECT_CONFIG_STORAGE_TOPIC "connect-configs"
