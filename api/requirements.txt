@@ -1,5 +1,5 @@
 certifi==2020.6.20
-Django==2.2.24
+Django==2.2.27
 djangorestframework==3.11.2
 djongo==1.3.3
 elasticsearch==7.9.1
